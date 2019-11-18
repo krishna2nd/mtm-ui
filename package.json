@@ -7,9 +7,11 @@
     "@types/node": "12.12.8",
     "@types/react": "16.9.11",
     "@types/react-dom": "16.9.4",
+    "@types/react-router-dom": "4.3.3",
     "office-ui-fabric-react": "^7.61.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
     "typescript": "3.7.2"
   },
