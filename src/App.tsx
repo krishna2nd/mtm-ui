@@ -1,12 +1,16 @@
 import * as React from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import { Nav, initializeIcons } from "office-ui-fabric-react";
-import { Router } from './Router';
+import { Nav, initializeIcons, INavLink } from "office-ui-fabric-react";
+import { Router } from "./Router";
 
 initializeIcons();
-const links = [
-  { name: "Tags", url: "/", key: "11", icon: "Tag" },
+const links: INavLink[] = [
+  {
+    name: "Tags",
+    url: "/",
+    key: "11",
+    icon: "Tag"
+  },
   {
     name: "Triggers",
     url: "/triggers",
@@ -19,7 +23,7 @@ const links = [
     key: "33",
     icon: "Variable"
   }
-]
+];
 
 const App: React.FC = () => {
   return (
@@ -31,7 +35,9 @@ const App: React.FC = () => {
         <aside className="nav-list-container">
           <Nav groups={[{ links }]} />
         </aside>
-        <div className="page-container"><Router /></div>
+        <div className="page-container">
+          <Router />
+        </div>
       </main>
     </>
   );
