@@ -86,4 +86,4 @@ export default {
   component: Tags,
   icon: "Tag",
   key: Routes.Tags
-};
+} as IRouteComponent;

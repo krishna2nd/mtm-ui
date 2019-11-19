@@ -79,10 +79,10 @@ class Triggers extends Component {
     ];
     return (
       <>
-        <h2 className={'header-padding'}>Triggers</h2>
+        <h2 className={"header-padding"}>Triggers</h2>
         <DetailsList
           items={items}
-          className={'table-border'}
+          className={"table-border"}
           columns={columns}
           layoutMode={DetailsListLayoutMode.justified}
           selectionPreservedOnEmptyClick={true}
@@ -97,4 +97,4 @@ export default {
   component: Triggers,
   icon: "TriggerAuto",
   key: Routes.Triggers
-};
+} as IRouteComponent;
