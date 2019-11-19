@@ -41,12 +41,16 @@ export default class Variables extends React.Component {
     }
 
     return (
-      <DetailsList
-        items={items}
-        columns={columns}
-        layoutMode={DetailsListLayoutMode.justified}
-        selectionPreservedOnEmptyClick={true}
-      />
+      <>
+        <h2 className={'header-padding'}>Variables</h2>
+        <DetailsList
+          items={items}
+          className={'table-border'}
+          columns={columns}
+          layoutMode={DetailsListLayoutMode.justified}
+          selectionPreservedOnEmptyClick={true}
+        />
+      </>
     );
   }
 }
