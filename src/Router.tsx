@@ -1,16 +1,19 @@
 import * as React from "react";
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import Triggers from "./components/Triggers";
-import Tags from "./components/Tags";
-import VariableComponent from "./components/Variables";
+import { Redirect, Route } from "react-router-dom";
+import { Routes, IRouteComponent } from "./models/AppModel";
 
-export const Router: React.FC = props => (
-  <BrowserRouter>
-    <Switch>
-      <Route path="/triggers" component={() => <Triggers />}></Route>
-      <Route path="/variables" component={() => <VariableComponent/>}></Route>
-      <Route path="/" exact component={() => <Tags />}></Route>
-      <Redirect to="/" />
-    </Switch>
-  </BrowserRouter>
+interface IRouteAggrProps {
+  setSelectedRoute: (key: Routes) => void;
+  routes: IRouteComponent[];
+}
+
+const Router: React.FC<IRouteAggrProps> = (props: IRouteAggrProps) => (
+  <>
+    {props.routes.map((rc: IRouteComponent) => (
+      <Route path={rc.key} exact component={rc.component} />
+    ))}
+    <Redirect to={Routes.Tags} />
+  </>
 );
+
+export default Router;

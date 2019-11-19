@@ -4,6 +4,7 @@ import {
   DetailsListLayoutMode,
   IColumn
 } from "office-ui-fabric-react";
+import { IRouteComponent, Routes } from "../models/AppModel";
 
 interface ITriggerItem {
   name: string;
@@ -62,14 +63,14 @@ class Triggers extends Component {
 
     const items: ITriggerItem[] = [
       {
-        name: "Tag1",
+        name: "Trigger 1",
         eventType: "All Elements",
         tags: ["t1", "t2"],
         lastEdited: new Date(),
         filter: "11"
       },
       {
-        name: "Tag2",
+        name: "Trigger 2",
         eventType: "Button",
         tags: ["t11", "t22"],
         lastEdited: new Date(),
@@ -87,4 +88,9 @@ class Triggers extends Component {
   }
 }
 
-export default Triggers;
+export default {
+  name: "Triggers",
+  component: Triggers,
+  icon: "TriggerAuto",
+  key: Routes.Triggers
+};
