@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import * as React from "react";
 import {
   DetailsList,
   DetailsListLayoutMode,
@@ -14,83 +14,80 @@ interface ITriggerItem {
   filter?: string;
 }
 
-class Triggers extends Component {
-  render() {
-    const columns: IColumn[] = [
-      {
-        key: "column1",
-        name: "Name",
-        fieldName: "name",
-        minWidth: 100,
-        maxWidth: 200,
-        isResizable: true
-      },
-      {
-        key: "column2",
-        name: "Event Type",
-        fieldName: "eventType",
-        minWidth: 100,
-        maxWidth: 200,
-        isResizable: true
-      },
-      {
-        key: "column3",
-        name: "Tags",
-        fieldName: "tags",
-        minWidth: 100,
-        maxWidth: 200,
-        isResizable: true,
-        onRender: (item: ITriggerItem) => item.tags.join(", ")
-      },
-      {
-        key: "column4",
-        name: "Last Edited",
-        fieldName: "lastEdited",
-        minWidth: 100,
-        maxWidth: 200,
-        isResizable: true,
-        onRender: (item: ITriggerItem) => item.lastEdited.toLocaleString()
-      },
-      {
-        key: "column5",
-        name: "Filter",
-        fieldName: "filter",
-        minWidth: 100,
-        maxWidth: 200,
-        isResizable: true
-      }
-    ];
-
-    const items: ITriggerItem[] = [
-      {
-        name: "Trigger 1",
-        eventType: "All Elements",
-        tags: ["t1", "t2"],
-        lastEdited: new Date(),
-        filter: "11"
-      },
-      {
-        name: "Trigger 2",
-        eventType: "Button",
-        tags: ["t11", "t22"],
-        lastEdited: new Date(),
-        filter: "22"
-      }
-    ];
-    return (
-      <>
-        <h2 className={"header-padding"}>Triggers</h2>
-        <DetailsList
-          items={items}
-          className={"table-border"}
-          columns={columns}
-          layoutMode={DetailsListLayoutMode.justified}
-          selectionPreservedOnEmptyClick={true}
-        />
-      </>
-    );
+const columns: IColumn[] = [
+  {
+    key: "column1",
+    name: "Name",
+    fieldName: "name",
+    minWidth: 100,
+    maxWidth: 200,
+    isResizable: true
+  },
+  {
+    key: "column2",
+    name: "Event Type",
+    fieldName: "eventType",
+    minWidth: 100,
+    maxWidth: 200,
+    isResizable: true
+  },
+  {
+    key: "column3",
+    name: "Tags",
+    fieldName: "tags",
+    minWidth: 100,
+    maxWidth: 200,
+    isResizable: true,
+    onRender: (item: ITriggerItem) => item.tags.join(", ")
+  },
+  {
+    key: "column4",
+    name: "Last Edited",
+    fieldName: "lastEdited",
+    minWidth: 100,
+    maxWidth: 200,
+    isResizable: true,
+    onRender: (item: ITriggerItem) => item.lastEdited.toLocaleString()
+  },
+  {
+    key: "column5",
+    name: "Filter",
+    fieldName: "filter",
+    minWidth: 100,
+    maxWidth: 200,
+    isResizable: true
   }
-}
+];
+
+const items: ITriggerItem[] = [
+  {
+    name: "Trigger 1",
+    eventType: "All Elements",
+    tags: ["t1", "t2"],
+    lastEdited: new Date(),
+    filter: "11"
+  },
+  {
+    name: "Trigger 2",
+    eventType: "Button",
+    tags: ["t11", "t22"],
+    lastEdited: new Date(),
+    filter: "22"
+  }
+];
+
+const Triggers: React.FC = props => {
+  console.log(props);
+  return (
+    <DetailsList
+      items={items}
+      className={"table-border"}
+      columns={columns}
+      layoutMode={DetailsListLayoutMode.justified}
+      selectionPreservedOnEmptyClick={true}
+    />
+  );
+};
 
 export default {
   name: "Triggers",

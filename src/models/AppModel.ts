@@ -7,6 +7,11 @@ export enum Routes {
 export interface IRouteComponent {
   key: Routes;
   name: string;
-  component: React.ComponentClass;
+  component: React.ComponentClass | React.FC;
   icon: string;
+}
+
+export interface IAnyAction<P = any> {
+  type: string;
+  payload?: P;
 }
