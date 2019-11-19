@@ -78,12 +78,16 @@ class Triggers extends Component {
       }
     ];
     return (
-      <DetailsList
-        items={items}
-        columns={columns}
-        layoutMode={DetailsListLayoutMode.justified}
-        selectionPreservedOnEmptyClick={true}
-      />
+      <>
+        <h2 className={'header-padding'}>Triggers</h2>
+        <DetailsList
+          items={items}
+          className={'table-border'}
+          columns={columns}
+          layoutMode={DetailsListLayoutMode.justified}
+          selectionPreservedOnEmptyClick={true}
+        />
+      </>
     );
   }
 }
