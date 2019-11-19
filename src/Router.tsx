@@ -2,7 +2,7 @@ import * as React from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import Triggers from "./components/Triggers";
 import Tags from "./components/Tags";
-import VariableComponent from "./VariableComponent";
+import VariableComponent from "./components/Variables";
 
 export const Router: React.FC = props => (
   <BrowserRouter>

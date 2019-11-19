@@ -21,7 +21,7 @@ export interface IVariableComponentState {
   selectionDetails: {};
 }
 
-export default class VariableComponent extends React.Component<{}, IVariableComponentState> {
+export default class Variables extends React.Component<{}, IVariableComponentState> {
   private _selection: Selection;
   private _allItems: IVariableComponentItem[];
   private _columns: IColumn[];
