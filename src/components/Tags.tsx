@@ -4,6 +4,7 @@ import {
   DetailsListLayoutMode,
   IColumn
 } from "office-ui-fabric-react";
+import { Routes, IRouteComponent } from "../models/AppModel";
 
 interface ITagItem {
   name: string;
@@ -67,10 +68,10 @@ class Tags extends Component {
     ];
     return (
       <>
-        <h2 className={'header-padding'}>Tags</h2>
+        <h2 className={"header-padding"}>Tags</h2>
         <DetailsList
           items={items}
-          className={'table-border'}
+          className={"table-border"}
           columns={columns}
           layoutMode={DetailsListLayoutMode.justified}
           selectionPreservedOnEmptyClick={true}
@@ -80,4 +81,9 @@ class Tags extends Component {
   }
 }
 
-export default Tags;
+export default {
+  name: "Tags",
+  component: Tags,
+  icon: "Tag",
+  key: Routes.Tags
+} as IRouteComponent;

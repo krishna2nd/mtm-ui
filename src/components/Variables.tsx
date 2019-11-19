@@ -3,6 +3,7 @@ import {
   DetailsList,
   DetailsListLayoutMode
 } from "office-ui-fabric-react/lib/DetailsList";
+import { Routes, IRouteComponent } from "../models/AppModel";
 
 export interface IVariableItem {
   key: number;
@@ -10,7 +11,7 @@ export interface IVariableItem {
   type: string;
 }
 
-export default class Variables extends React.Component {
+class Variables extends React.Component {
   public render(): JSX.Element {
     const columns = [
       {
@@ -42,10 +43,10 @@ export default class Variables extends React.Component {
 
     return (
       <>
-        <h2 className={'header-padding'}>Variables</h2>
+        <h2 className={"header-padding"}>Variables</h2>
         <DetailsList
           items={items}
-          className={'table-border'}
+          className={"table-border"}
           columns={columns}
           layoutMode={DetailsListLayoutMode.justified}
           selectionPreservedOnEmptyClick={true}
@@ -54,3 +55,10 @@ export default class Variables extends React.Component {
     );
   }
 }
+
+export default {
+  name: "Variables",
+  component: Variables,
+  icon: "Variable",
+  key: Routes.Variables
+} as IRouteComponent;
