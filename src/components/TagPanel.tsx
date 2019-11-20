@@ -13,7 +13,6 @@ interface ITagPanel {
 }
 
 const TagPanel: React.FC<ITagPanel> = (props: ITagPanel) => {
-  debugger;
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState("");
   const [type, setType] = useState("");

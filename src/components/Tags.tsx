@@ -73,7 +73,7 @@ const mapStateToProps = (state: IState) => ({});
 
 const mapDispatchToProps = (dispatch: any) => ({
   setSelectedItem: (item: any) =>
-    dispatch({ type: "onItemSelection", payload: item })
+    dispatch({ type: "onTagItemSelection", payload: item })
 });
 
 interface ITagsProps

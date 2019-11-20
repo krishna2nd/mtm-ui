@@ -11,7 +11,7 @@ export function TagsReducer(
   action: IAnyAction
 ) {
   switch (action.type) {
-    case "onItemSelection":
+    case "onTagItemSelection":
       return {
         ...state,
         selectedItem: action.payload

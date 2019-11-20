@@ -11,7 +11,7 @@ const VariablePanel: React.FC<IVariablePanel> = (props: IVariablePanel) => {
 
   const [name, setName] = useState("");
   const [type, setType] = useState("");
-debugger;
+  debugger;
   useEffect(() => {
     const { name, type } = props;
     setIsOpen(true);
@@ -29,7 +29,7 @@ debugger;
       isOpen={isOpen}
       closeButtonAriaLabel="Close"
       isHiddenOnDismiss={true}
-      headerText="Add Variable"
+      headerText="Add Variables"
       onDismiss={() => setIsOpen(false)}
     >
       <TextField label={"Name"} required />
