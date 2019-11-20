@@ -18,7 +18,6 @@ const TagPanel: React.FC<ITagPanel> = (props: ITagPanel) => {
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [triggers, setTriggers] = useState("");
-  console.log("isOpen", isOpen);
 
   useEffect(() => {
     const { name, type, triggers } = props;

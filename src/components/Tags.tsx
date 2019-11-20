@@ -2,12 +2,13 @@ import * as React from "react";
 import {
   DetailsList,
   DetailsListLayoutMode,
-  IColumn
+  IColumn,
+  SelectionMode,
+  Selection
 } from "office-ui-fabric-react";
 import { Routes, IRouteComponent } from "../models/AppModel";
-import { MainReducer } from "../reducers/Main";
 
-interface ITagItem {
+export interface ITagItem {
   name: string;
   type: string;
   triggers: string[];
@@ -67,6 +68,17 @@ const items: ITagItem[] = [
 ];
 
 const Tags: React.FC<any> = props => {
+  let selectedItem;
+  const onSelectionChanged = () => {
+    debugger;
+    const selectedItem = selection.getSelection()[0];
+    console.log("selectedItem", selectedItem);
+  };
+
+  const selection = new Selection({
+    onSelectionChanged: onSelectionChanged
+  });
+
   return (
     <DetailsList
       items={items}
@@ -74,6 +86,7 @@ const Tags: React.FC<any> = props => {
       columns={columns}
       layoutMode={DetailsListLayoutMode.justified}
       selectionPreservedOnEmptyClick={true}
+      selectionMode={SelectionMode.single}
     />
   );
 };

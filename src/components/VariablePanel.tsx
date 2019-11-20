@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Panel, TextField } from "office-ui-fabric-react";
 
-const TriggerAddPanel: React.FC = props => {
+const VariablePanel: React.FC = props => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -13,11 +13,9 @@ const TriggerAddPanel: React.FC = props => {
       onDismiss={() => setIsOpen(false)}
     >
       <TextField label={"Name"} required />
-      <TextField label={"Event Type"} required />
-      <TextField label={"Filter"} />
-      <TextField label={"Tags"} />
+      <TextField label={"Type"} required />
     </Panel>
   );
 };
 
-export default TriggerAddPanel;
+export default VariablePanel;

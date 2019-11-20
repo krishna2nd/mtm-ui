@@ -8,7 +8,10 @@ export const InitialState = {
 
 export type MainState = typeof InitialState;
 
-export function MainReducer(state: MainState, action: IAnyAction) {
+export function MainReducer(
+  state: MainState = InitialState,
+  action: IAnyAction
+) {
   switch (action.type) {
     case "onAddClick":
       return {

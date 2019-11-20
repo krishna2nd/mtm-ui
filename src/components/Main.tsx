@@ -9,8 +9,11 @@ import {
 import { RouteComponentProps, withRouter } from "react-router";
 import Router from "../Router";
 import { IRouteComponent, Routes } from "../models/AppModel";
+import { connect } from "react-redux";
 import { MainReducer, InitialState } from "../reducers/Main";
+import { Dispatch } from "redux";
 import TagPanel from "./TagPanel";
+import { IState } from "../reducers/Root";
 
 const getNavLinks = memoizeFunction((routes: IRouteComponent[]) =>
   routes.map(
@@ -24,13 +27,28 @@ const getNavLinks = memoizeFunction((routes: IRouteComponent[]) =>
   )
 );
 
-interface IMainProps extends RouteComponentProps {}
+const mapStateToProps = (state: IState) => ({
+  isAddPanelVisible: state.main.isAddPanelVisible,
+  isDeleteConfirmationDialogVisible:
+    state.main.isDeleteConfirmationDialogVisible,
+  isEditPanelVisible: state.main.isEditPanelVisible
+});
+
+const mapDispatchToProps = (dispatch: any) => ({
+  onAddClick: () => dispatch({ type: "onAddClick" }),
+  onEditClick: () => dispatch({ type: "onEditClick" }),
+  onDeleteClick: () => dispatch({ type: "onDeleteClick" })
+});
+
+interface IMainProps
+  extends RouteComponentProps,
+    ReturnType<typeof mapStateToProps>,
+    ReturnType<typeof mapDispatchToProps> {}
 
 const Main: React.FC<IMainProps> = (props: IMainProps) => {
   const [selectedRoute, setSelectedRoute] = React.useState(Routes.Tags);
   const [routes, setRoutes] = React.useState([] as IRouteComponent[]);
   const [headerName, setHeaderName] = React.useState("Tags");
-  const [state, dispatch] = React.useReducer(MainReducer, InitialState);
 
   React.useEffect(() => {
     if (routes.length === 0) {
@@ -49,20 +67,19 @@ const Main: React.FC<IMainProps> = (props: IMainProps) => {
   };
 
   const renderPanel = (): React.ReactNode => {
-    console.log("state.isAddPanelVisible", state.isAddPanelVisible);
-    if (state.isAddPanelVisible) {
+    if (props.isAddPanelVisible) {
       if (selectedRoute === Routes.Tags) {
         return <TagPanel visible={true} />;
       } else if (selectedRoute === Routes.Triggers) {
         return <TagPanel visible={true} />;
       } else if (selectedRoute === Routes.Variables) {
       }
-    } else if (state.isDeleteConfirmationDialogVisible) {
+    } else if (props.isDeleteConfirmationDialogVisible) {
       if (selectedRoute === Routes.Tags) {
       } else if (selectedRoute === Routes.Triggers) {
       } else if (selectedRoute === Routes.Variables) {
       }
-    } else if (state.isEditPanelVisible) {
+    } else if (props.isEditPanelVisible) {
       if (selectedRoute === Routes.Tags) {
       } else if (selectedRoute === Routes.Triggers) {
       } else if (selectedRoute === Routes.Variables) {
@@ -88,29 +105,24 @@ const Main: React.FC<IMainProps> = (props: IMainProps) => {
               key: "addRow",
               text: "Add",
               iconProps: { iconName: "Add" },
-              onClick: () =>
-                dispatch({ type: "onAddClick", payload: selectedRoute })
+              onClick: () => props.onAddClick()
             },
             {
               key: "editRow",
               text: "Edit",
               iconProps: { iconName: "Edit" },
-              onClick: () =>
-                dispatch({ type: "onEditClick", payload: selectedRoute })
+              onClick: () => props.onEditClick()
             },
             {
               key: "deleteRow",
               text: "Delete",
               iconProps: { iconName: "Trash" },
-              onClick: () =>
-                dispatch({ type: "onDeleteClick", payload: selectedRoute })
+              onClick: () => props.onDeleteClick()
             }
           ]}
         />
         <Router
           routes={routes}
-          state={state}
-          dispatch={dispatch}
           setSelectedRoute={(key: Routes) => setSelectedRoute(key)}
         ></Router>
       </div>
@@ -119,4 +131,4 @@ const Main: React.FC<IMainProps> = (props: IMainProps) => {
   );
 };
 
-export default withRouter(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Main));
