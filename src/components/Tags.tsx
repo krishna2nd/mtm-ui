@@ -7,6 +7,8 @@ import {
   Selection
 } from "office-ui-fabric-react";
 import { Routes, IRouteComponent } from "../models/AppModel";
+import { connect } from "react-redux";
+import { IState } from "../reducers/Root";
 
 export interface ITagItem {
   name: string;
@@ -67,12 +69,22 @@ const items: ITagItem[] = [
   }
 ];
 
-const Tags: React.FC<any> = props => {
+const mapStateToProps = (state: IState) => ({});
+
+const mapDispatchToProps = (dispatch: any) => ({
+  setSelectedItem: (item: any) =>
+    dispatch({ type: "onItemSelection", payload: item })
+});
+
+interface ITagsProps
+  extends ReturnType<typeof mapStateToProps>,
+    ReturnType<typeof mapDispatchToProps> {}
+
+const Tags: React.FC<ITagsProps> = (props: ITagsProps) => {
   let selectedItem;
   const onSelectionChanged = () => {
-    debugger;
     const selectedItem = selection.getSelection()[0];
-    console.log("selectedItem", selectedItem);
+    props.setSelectedItem(selectedItem);
   };
 
   const selection = new Selection({
@@ -85,15 +97,17 @@ const Tags: React.FC<any> = props => {
       className={"table-border"}
       columns={columns}
       layoutMode={DetailsListLayoutMode.justified}
+      selection={selection}
       selectionPreservedOnEmptyClick={true}
       selectionMode={SelectionMode.single}
     />
   );
 };
 
+const ConnectedTags = connect(mapStateToProps, mapDispatchToProps)(Tags);
 export default {
   name: "Tags",
-  component: Tags,
+  component: ConnectedTags,
   icon: "Tag",
   key: Routes.Tags
 } as IRouteComponent;
