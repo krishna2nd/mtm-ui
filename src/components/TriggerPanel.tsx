@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import { Panel, TextField } from "office-ui-fabric-react";
 
-const TriggerPanel: React.FC = props => {
-  const [isOpen, setIsOpen] = useState(false);
+interface ITriggerPanel {
+  name?: string;
+  eventType?: string;
+  tags?: string;
+  filter?: number;
+}
+
+const TriggerPanel: React.FC<ITriggerPanel> = (props: ITriggerPanel) => {
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
     <Panel

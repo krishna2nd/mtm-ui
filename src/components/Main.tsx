@@ -14,6 +14,8 @@ import { MainReducer, InitialState } from "../reducers/Main";
 import { Dispatch } from "redux";
 import TagPanel from "./TagPanel";
 import { IState } from "../reducers/Root";
+import TriggerPanel from "./TriggerPanel";
+import VariablePanel from "./VariablePanel";
 
 const getNavLinks = memoizeFunction((routes: IRouteComponent[]) =>
   routes.map(
@@ -31,7 +33,8 @@ const mapStateToProps = (state: IState) => ({
   isAddPanelVisible: state.main.isAddPanelVisible,
   isDeleteConfirmationDialogVisible:
     state.main.isDeleteConfirmationDialogVisible,
-  isEditPanelVisible: state.main.isEditPanelVisible
+  isEditPanelVisible: state.main.isEditPanelVisible,
+  state: state
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -69,10 +72,11 @@ const Main: React.FC<IMainProps> = (props: IMainProps) => {
   const renderPanel = (): React.ReactNode => {
     if (props.isAddPanelVisible) {
       if (selectedRoute === Routes.Tags) {
-        return <TagPanel visible={true} />;
+        return <TagPanel />;
       } else if (selectedRoute === Routes.Triggers) {
-        return <TagPanel visible={true} />;
+        return <TriggerPanel />;
       } else if (selectedRoute === Routes.Variables) {
+        return <VariablePanel/>;
       }
     } else if (props.isDeleteConfirmationDialogVisible) {
       if (selectedRoute === Routes.Tags) {
@@ -80,9 +84,14 @@ const Main: React.FC<IMainProps> = (props: IMainProps) => {
       } else if (selectedRoute === Routes.Variables) {
       }
     } else if (props.isEditPanelVisible) {
+      debugger;
+      const {tags, triggers, variables} = props.state;
       if (selectedRoute === Routes.Tags) {
+        return <TagPanel {...(tags && tags.selectedItem || {})}/>;
       } else if (selectedRoute === Routes.Triggers) {
+        return <TriggerPanel {...(triggers && triggers.selectedItem || {})}/>;
       } else if (selectedRoute === Routes.Variables) {
+        return <VariablePanel {...(variables && variables.selectedItem || {})}/>;
       }
     }
     return;

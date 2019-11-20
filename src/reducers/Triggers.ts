@@ -17,6 +17,6 @@ export function TriggersReducer(
         selectedItem: action.payload
       };
     default:
-      return TriggersInitialState;
+      return state;
   }
 }

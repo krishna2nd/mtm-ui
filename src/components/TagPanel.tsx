@@ -7,13 +7,13 @@ import {
 } from "office-ui-fabric-react";
 
 interface ITagPanel {
-  visible: boolean;
   name?: string;
   type?: string;
   triggers?: string;
 }
 
 const TagPanel: React.FC<ITagPanel> = (props: ITagPanel) => {
+  debugger;
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState("");
   const [type, setType] = useState("");

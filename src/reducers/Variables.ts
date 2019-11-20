@@ -17,6 +17,6 @@ export function VariablesReducer(
         selectedItem: action.payload
       };
     default:
-      return VariablesInitialState;
+      return state;
   }
 }

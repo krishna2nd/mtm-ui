@@ -17,6 +17,6 @@ export function TagsReducer(
         selectedItem: action.payload
       };
     default:
-      return TagsInitialState;
+      return state;
   }
 }

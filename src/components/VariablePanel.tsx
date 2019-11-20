@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import { Panel, TextField } from "office-ui-fabric-react";
 
-const VariablePanel: React.FC = props => {
-  const [isOpen, setIsOpen] = useState(false);
+interface IVariablePanel {
+  name?: string;
+  type?: string;
+}
+
+const VariablePanel: React.FC<IVariablePanel> = (props: IVariablePanel) => {
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
     <Panel
