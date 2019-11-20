@@ -2,6 +2,7 @@ import * as React from "react";
 import {
   DetailsList,
   DetailsListLayoutMode,
+  IColumn,
   SelectionMode,
   Selection
 } from "office-ui-fabric-react/lib/DetailsList";
@@ -21,31 +22,44 @@ export interface IVariableItem {
   type: string;
 }
 
+const columns: IColumn[] = [
+  {
+    key: "column1",
+    name: "Name",
+    fieldName: "name",
+    minWidth: 100,
+    maxWidth: 200,
+    isResizable: true
+  },
+  {
+    key: "column2",
+    name: "Type",
+    fieldName: "type",
+    minWidth: 100,
+    maxWidth: 200,
+    isResizable: true
+  }
+];
+
+const items: IVariableItem[] = [
+  {
+    key: 1,
+    name: "var1",
+    type: "Custom HTML"
+  },
+  {
+    key: 2,
+    name: "Var2",
+    type: "Deferred HTML"
+  }
+];
 interface IVariableProps
   extends ReturnType<typeof mapStateToProps>,
     ReturnType<typeof mapDispatchToProps> {}
 
 const Variables: React.FC<IVariableProps> = (props: IVariableProps) => {
-  const columns = [
-    {
-      key: "column1",
-      name: "Name",
-      fieldName: "name",
-      minWidth: 100,
-      maxWidth: 200,
-      isResizable: true
-    },
-    {
-      key: "column2",
-      name: "Type",
-      fieldName: "type",
-      minWidth: 100,
-      maxWidth: 200,
-      isResizable: true
-    }
-  ];
+  let selectedItem;
   const onSelectionChanged = () => {
-    debugger;
     const selectedItem = selection.getSelection()[0];
     props.setSelectedItem(selectedItem);
   };
@@ -53,15 +67,6 @@ const Variables: React.FC<IVariableProps> = (props: IVariableProps) => {
   const selection = new Selection({
     onSelectionChanged: onSelectionChanged
   });
-
-  const items = [];
-  for (let i = 0; i < 5; i++) {
-    items.push({
-      key: i,
-      type: "type " + i,
-      name: "Name " + i
-    });
-  }
 
   return (
     <DetailsList

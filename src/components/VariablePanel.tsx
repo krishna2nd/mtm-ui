@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Panel, TextField } from "office-ui-fabric-react";
+import {
+  Panel,
+  TextField,
+  PrimaryButton,
+  DefaultButton
+} from "office-ui-fabric-react";
 
 interface IVariablePanel {
   name?: string;
@@ -11,7 +16,7 @@ const VariablePanel: React.FC<IVariablePanel> = (props: IVariablePanel) => {
 
   const [name, setName] = useState("");
   const [type, setType] = useState("");
-debugger;
+  debugger;
   useEffect(() => {
     const { name, type } = props;
     setIsOpen(true);
@@ -24,6 +29,26 @@ debugger;
     };
   }, [props.name, props.type]);
 
+  const onTagSave = () => {
+    console.log("Save the values", name, type);
+  };
+
+  const renderSaveCancel = () => {
+    return (
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <PrimaryButton onClick={() => onTagSave()}>Save</PrimaryButton>
+        <DefaultButton
+          onClick={() => {
+            // setIsCancel(true);
+            setIsOpen(false);
+          }}
+        >
+          Cancel
+        </DefaultButton>
+      </div>
+    );
+  };
+
   return (
     <Panel
       isOpen={isOpen}
@@ -31,9 +56,10 @@ debugger;
       isHiddenOnDismiss={true}
       headerText="Add Variable"
       onDismiss={() => setIsOpen(false)}
+      onRenderFooterContent={() => renderSaveCancel()}
     >
-      <TextField label={"Name"} required />
-      <TextField label={"Type"} required />
+      <TextField value={name} label={"Name"} required />
+      <TextField value={type} label={"Type"} required />
     </Panel>
   );
 };
