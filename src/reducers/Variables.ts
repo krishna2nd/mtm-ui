@@ -10,8 +10,9 @@ export function VariablesReducer(
   state: VariablesState = VariablesInitialState,
   action: IAnyAction
 ) {
+  debugger;
   switch (action.type) {
-    case "onItemSelection":
+    case "onVariableItemSelection":
       return {
         ...state,
         selectedItem: action.payload
