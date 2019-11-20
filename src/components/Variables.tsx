@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import {
   DetailsList,
   DetailsListLayoutMode,
@@ -41,24 +41,13 @@ const columns: IColumn[] = [
   }
 ];
 
-const items: IVariableItem[] = [
-  {
-    key: 1,
-    name: "var1",
-    type: "Custom HTML"
-  },
-  {
-    key: 2,
-    name: "Var2",
-    type: "Deferred HTML"
-  }
-];
 interface IVariableProps
   extends ReturnType<typeof mapStateToProps>,
     ReturnType<typeof mapDispatchToProps> {}
 
 const Variables: React.FC<IVariableProps> = (props: IVariableProps) => {
-  let selectedItem;
+  const [items, setItems] = useState([]);
+
   const onSelectionChanged = () => {
     const selectedItem = selection.getSelection()[0];
     props.setSelectedItem(selectedItem);
@@ -67,6 +56,19 @@ const Variables: React.FC<IVariableProps> = (props: IVariableProps) => {
   const selection = new Selection({
     onSelectionChanged: onSelectionChanged
   });
+
+  useEffect(() => {
+    fetch("https://ms-tagmanager.azurewebsites.net/variables")
+      .then(res => res.json())
+      .then(
+        result => {
+          setItems(result);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+  }, []);
 
   return (
     <DetailsList

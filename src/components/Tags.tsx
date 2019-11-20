@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import {
   DetailsList,
   DetailsListLayoutMode,
@@ -54,21 +54,6 @@ const columns: IColumn[] = [
   }
 ];
 
-const items: ITagItem[] = [
-  {
-    name: "Tag1",
-    type: "Custom HTML",
-    triggers: ["t1", "t2"],
-    lastEdited: new Date()
-  },
-  {
-    name: "Tag2",
-    type: "Deferred HTML",
-    triggers: ["t11", "t22"],
-    lastEdited: new Date()
-  }
-];
-
 const mapStateToProps = (state: IState) => ({});
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -81,7 +66,7 @@ interface ITagsProps
     ReturnType<typeof mapDispatchToProps> {}
 
 const Tags: React.FC<ITagsProps> = (props: ITagsProps) => {
-  let selectedItem;
+  const [items, setItems] = useState([]);
   const onSelectionChanged = () => {
     const selectedItem = selection.getSelection()[0];
     props.setSelectedItem(selectedItem);
@@ -90,6 +75,19 @@ const Tags: React.FC<ITagsProps> = (props: ITagsProps) => {
   const selection = new Selection({
     onSelectionChanged: onSelectionChanged
   });
+
+  useEffect(() => {
+    fetch("https://ms-tagmanager.azurewebsites.net/tags")
+      .then(res => res.json())
+      .then(
+        result => {
+          setItems(result);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+  }, []);
 
   return (
     <DetailsList

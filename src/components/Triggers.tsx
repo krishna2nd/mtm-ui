@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import {
   DetailsList,
   DetailsListLayoutMode,
@@ -70,29 +70,12 @@ const columns: IColumn[] = [
   }
 ];
 
-const items: ITriggerItem[] = [
-  {
-    name: "Trigger 1",
-    eventType: "All Elements",
-    tags: ["t1", "t2"],
-    lastEdited: new Date(),
-    filter: "11"
-  },
-  {
-    name: "Trigger 2",
-    eventType: "Button",
-    tags: ["t11", "t22"],
-    lastEdited: new Date(),
-    filter: "22"
-  }
-];
-
 interface ITriggerProps
   extends ReturnType<typeof mapStateToProps>,
     ReturnType<typeof mapDispatchToProps> {}
 
 const Triggers: React.FC<ITriggerProps> = (props: ITriggerProps) => {
-  let selectedItem;
+  const [items, setItems] = useState([]);
   const onSelectionChanged = () => {
     const selectedItem = selection.getSelection()[0];
     props.setSelectedItem(selectedItem);
@@ -101,6 +84,19 @@ const Triggers: React.FC<ITriggerProps> = (props: ITriggerProps) => {
   const selection = new Selection({
     onSelectionChanged: onSelectionChanged
   });
+
+  useEffect(() => {
+    fetch("https://ms-tagmanager.azurewebsites.net/triggers")
+      .then(res => res.json())
+      .then(
+        result => {
+          setItems(result);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+  }, []);
 
   return (
     <DetailsList
