@@ -4,15 +4,13 @@ import {
   Nav,
   INavLink,
   memoizeFunction,
-  CommandBar,
-  Dialog,
-  DialogType,
-  ICommandBarItemProps
+  CommandBar
 } from "office-ui-fabric-react";
 import { RouteComponentProps, withRouter } from "react-router";
 import Router from "../Router";
 import { IRouteComponent, Routes } from "../models/AppModel";
 import { MainReducer, InitialState } from "../reducers/Main";
+import TagPanel from "./TagPanel";
 
 const getNavLinks = memoizeFunction((routes: IRouteComponent[]) =>
   routes.map(
@@ -35,7 +33,6 @@ const Main: React.FC<IMainProps> = (props: IMainProps) => {
   const [state, dispatch] = React.useReducer(MainReducer, InitialState);
 
   React.useEffect(() => {
-    debugger;
     if (routes.length === 0) {
       Promise.all([
         import("./Tags"),
@@ -51,27 +48,25 @@ const Main: React.FC<IMainProps> = (props: IMainProps) => {
     setHeaderName(navLink!.name);
   };
 
-  const renderDialog = (): React.ReactNode => {
-    if (
-      state.isAddPanelVisible ||
-      state.isDeleteConfirmationDialogVisible ||
-      state.isEditPanelVisible
-    ) {
-      return (
-        <Dialog
-          hidden={false}
-          dialogContentProps={{
-            type: DialogType.close,
-            title: "Test Dialog",
-            subText: "Test body"
-          }}
-          modalProps={{
-            isBlocking: true,
-            styles: { main: { maxWidth: 450 } }
-          }}
-          onDismiss={() => dispatch({ type: "" })}
-        />
-      );
+  const renderPanel = (): React.ReactNode => {
+    console.log("state.isAddPanelVisible", state.isAddPanelVisible);
+    if (state.isAddPanelVisible) {
+      if (selectedRoute === Routes.Tags) {
+        return <TagPanel visible={true} />;
+      } else if (selectedRoute === Routes.Triggers) {
+        return <TagPanel visible={true} />;
+      } else if (selectedRoute === Routes.Variables) {
+      }
+    } else if (state.isDeleteConfirmationDialogVisible) {
+      if (selectedRoute === Routes.Tags) {
+      } else if (selectedRoute === Routes.Triggers) {
+      } else if (selectedRoute === Routes.Variables) {
+      }
+    } else if (state.isEditPanelVisible) {
+      if (selectedRoute === Routes.Tags) {
+      } else if (selectedRoute === Routes.Triggers) {
+      } else if (selectedRoute === Routes.Variables) {
+      }
     }
     return;
   };
@@ -119,7 +114,7 @@ const Main: React.FC<IMainProps> = (props: IMainProps) => {
           setSelectedRoute={(key: Routes) => setSelectedRoute(key)}
         ></Router>
       </div>
-      {renderDialog()}
+      {renderPanel()}
     </main>
   );
 };

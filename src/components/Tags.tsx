@@ -2,9 +2,7 @@ import * as React from "react";
 import {
   DetailsList,
   DetailsListLayoutMode,
-  IColumn,
-  Selection,
-  IDetailsListProps
+  IColumn
 } from "office-ui-fabric-react";
 import { Routes, IRouteComponent } from "../models/AppModel";
 import { MainReducer } from "../reducers/Main";
