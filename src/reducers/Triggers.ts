@@ -11,7 +11,7 @@ export function TriggersReducer(
   action: IAnyAction
 ) {
   switch (action.type) {
-    case "onItemSelection":
+    case "onTriggerItemSelection":
       return {
         ...state,
         selectedItem: action.payload

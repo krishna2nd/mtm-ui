@@ -76,7 +76,7 @@ const Main: React.FC<IMainProps> = (props: IMainProps) => {
       } else if (selectedRoute === Routes.Triggers) {
         return <TriggerPanel />;
       } else if (selectedRoute === Routes.Variables) {
-        return <VariablePanel/>;
+        return <VariablePanel />;
       }
     } else if (props.isDeleteConfirmationDialogVisible) {
       if (selectedRoute === Routes.Tags) {
@@ -84,14 +84,17 @@ const Main: React.FC<IMainProps> = (props: IMainProps) => {
       } else if (selectedRoute === Routes.Variables) {
       }
     } else if (props.isEditPanelVisible) {
-      debugger;
-      const {tags, triggers, variables} = props.state;
+      const { tags, triggers, variables } = props.state;
       if (selectedRoute === Routes.Tags) {
-        return <TagPanel {...(tags && tags.selectedItem || {})}/>;
+        return <TagPanel {...((tags && tags.selectedItem) || {})} />;
       } else if (selectedRoute === Routes.Triggers) {
-        return <TriggerPanel {...(triggers && triggers.selectedItem || {})}/>;
+        return (
+          <TriggerPanel {...((triggers && triggers.selectedItem) || {})} />
+        );
       } else if (selectedRoute === Routes.Variables) {
-        return <VariablePanel {...(variables && variables.selectedItem || {})}/>;
+        return (
+          <VariablePanel {...((variables && variables.selectedItem) || {})} />
+        );
       }
     }
     return;

@@ -2,9 +2,13 @@ import * as React from "react";
 import {
   DetailsList,
   DetailsListLayoutMode,
-  IColumn
+  IColumn,
+  SelectionMode,
+  Selection
 } from "office-ui-fabric-react";
 import { IRouteComponent, Routes } from "../models/AppModel";
+import { connect } from "react-redux";
+import { IState } from "../reducers/Root";
 
 interface ITriggerItem {
   name: string;
@@ -13,6 +17,13 @@ interface ITriggerItem {
   lastEdited: Date;
   filter?: string;
 }
+
+const mapStateToProps = (state: IState) => ({});
+
+const mapDispatchToProps = (dispatch: any) => ({
+  setSelectedItem: (item: any) =>
+    dispatch({ type: "onTriggerItemSelection", payload: item })
+});
 
 const columns: IColumn[] = [
   {
@@ -76,8 +87,21 @@ const items: ITriggerItem[] = [
   }
 ];
 
-const Triggers: React.FC = props => {
-  console.log(props);
+interface ITriggerProps
+  extends ReturnType<typeof mapStateToProps>,
+    ReturnType<typeof mapDispatchToProps> {}
+
+const Triggers: React.FC<ITriggerProps> = (props: ITriggerProps) => {
+  let selectedItem;
+  const onSelectionChanged = () => {
+    const selectedItem = selection.getSelection()[0];
+    props.setSelectedItem(selectedItem);
+  };
+
+  const selection = new Selection({
+    onSelectionChanged: onSelectionChanged
+  });
+
   return (
     <DetailsList
       items={items}
@@ -85,13 +109,20 @@ const Triggers: React.FC = props => {
       columns={columns}
       layoutMode={DetailsListLayoutMode.justified}
       selectionPreservedOnEmptyClick={true}
+      selectionMode={SelectionMode.single}
+      selection={selection}
     />
   );
 };
 
+const ConnectedTriggers = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Triggers);
+
 export default {
   name: "Triggers",
-  component: Triggers,
+  component: ConnectedTriggers,
   icon: "TriggerAuto",
   key: Routes.Triggers
 } as IRouteComponent;

@@ -19,7 +19,6 @@ export function MainReducer(
         isAddPanelVisible: true
       };
     case "onEditClick":
-      debugger;
       return {
         ...state,
         isEditPanelVisible: true

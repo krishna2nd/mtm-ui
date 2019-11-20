@@ -54,7 +54,7 @@ const VariablePanel: React.FC<IVariablePanel> = (props: IVariablePanel) => {
       isOpen={isOpen}
       closeButtonAriaLabel="Close"
       isHiddenOnDismiss={true}
-      headerText="Add Variable"
+      headerText="Add Variables"
       onDismiss={() => setIsOpen(false)}
       onRenderFooterContent={() => renderSaveCancel()}
     >
