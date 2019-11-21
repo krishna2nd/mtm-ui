@@ -11,10 +11,10 @@ declare global {
 }
 
 export interface IState {
-  readonly main: MainState;
-  readonly tags: TagsState;
-  readonly triggers: TriggersState;
-  readonly variables: VariablesState;
+  main: MainState;
+  tags: TagsState;
+  triggers: TriggersState;
+  variables: VariablesState;
 }
 
 export default createStore<IState, any, any, any>(

@@ -1,4 +1,4 @@
-import { IAnyAction } from "../models/AppModel";
+import { IMTMAction } from "../models/App";
 
 export const InitialState = {
   isAddPanelVisible: false,
@@ -8,10 +8,7 @@ export const InitialState = {
 
 export type MainState = typeof InitialState;
 
-export function MainReducer(
-  state: MainState = InitialState,
-  action: IAnyAction
-) {
+export function MainReducer(state = InitialState, action: IMTMAction) {
   switch (action.type) {
     case "onAddClick":
       return {

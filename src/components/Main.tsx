@@ -8,14 +8,9 @@ import {
 } from "office-ui-fabric-react";
 import { RouteComponentProps, withRouter } from "react-router";
 import Router from "../Router";
-import { IRouteComponent, Routes } from "../models/AppModel";
+import { IRouteComponent, Routes } from "../models/App";
 import { connect } from "react-redux";
-import { MainReducer, InitialState } from "../reducers/Main";
-import { Dispatch } from "redux";
-import TagPanel from "./TagPanel";
 import { IState } from "../reducers/Root";
-import TriggerPanel from "./TriggerPanel";
-import VariablePanel from "./VariablePanel";
 
 const getNavLinks = memoizeFunction((routes: IRouteComponent[]) =>
   routes.map(
@@ -56,9 +51,9 @@ const Main: React.FC<IMainProps> = (props: IMainProps) => {
   React.useEffect(() => {
     if (routes.length === 0) {
       Promise.all([
-        import("./Tags"),
-        import("./Triggers"),
-        import("./Variables")
+        import("./Tags/Tags"),
+        import("./Triggers/Triggers"),
+        import("./Variables/Variables")
       ]).then(imports => setRoutes(imports.map(i => i.default)));
     }
   }, [routes]);
@@ -67,37 +62,6 @@ const Main: React.FC<IMainProps> = (props: IMainProps) => {
     props.history.push(navLink!.link);
     setSelectedRoute(navLink!.link);
     setHeaderName(navLink!.name);
-  };
-
-  const renderPanel = (): React.ReactNode => {
-    if (props.isAddPanelVisible) {
-      if (selectedRoute === Routes.Tags) {
-        return <TagPanel />;
-      } else if (selectedRoute === Routes.Triggers) {
-        return <TriggerPanel />;
-      } else if (selectedRoute === Routes.Variables) {
-        return <VariablePanel />;
-      }
-    } else if (props.isDeleteConfirmationDialogVisible) {
-      if (selectedRoute === Routes.Tags) {
-      } else if (selectedRoute === Routes.Triggers) {
-      } else if (selectedRoute === Routes.Variables) {
-      }
-    } else if (props.isEditPanelVisible) {
-      const { tags, triggers, variables } = props.state;
-      if (selectedRoute === Routes.Tags) {
-        return <TagPanel {...((tags && tags.selectedItem) || {})} />;
-      } else if (selectedRoute === Routes.Triggers) {
-        return (
-          <TriggerPanel {...((triggers && triggers.selectedItem) || {})} />
-        );
-      } else if (selectedRoute === Routes.Variables) {
-        return (
-          <VariablePanel {...((variables && variables.selectedItem) || {})} />
-        );
-      }
-    }
-    return;
   };
 
   return (
@@ -138,7 +102,6 @@ const Main: React.FC<IMainProps> = (props: IMainProps) => {
           setSelectedRoute={(key: Routes) => setSelectedRoute(key)}
         ></Router>
       </div>
-      {renderPanel()}
     </main>
   );
 };

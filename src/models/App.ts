@@ -11,7 +11,14 @@ export interface IRouteComponent {
   icon: string;
 }
 
-export interface IAnyAction<P = any> {
+export interface IMTMAction<P = any> {
   type: string;
   payload?: P;
+}
+
+export enum Status {
+  NotYetStarted,
+  Loading,
+  Completed,
+  Failed
 }
