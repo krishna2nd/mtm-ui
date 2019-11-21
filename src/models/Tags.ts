@@ -12,7 +12,7 @@ export class TagItem implements ITagItem {
   triggers = [];
   id = -1;
 
-  constructor(obj = {}) {
-    Object.assign(this, obj);
+  constructor(obj: Partial<ITagItem> = {}) {
+    Object.assign<ITagItem, Partial<ITagItem>>(this, obj);
   }
 }

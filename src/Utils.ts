@@ -1,4 +1,4 @@
-const DefaultWaitTime = 200;
+const DefaultWaitTime = 10;
 
 export function debounce(
   func: any,

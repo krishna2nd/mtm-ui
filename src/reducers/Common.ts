@@ -4,7 +4,7 @@ import { IBase } from "../models/Common";
 const emptyReducer = <S>(state: S, _: IMTMAction): S => state;
 
 export const getCommonReducer = <T, S extends IBase<T>>(
-  C: new (item?: any) => T,
+  C: new (item?: Partial<T>) => T,
   additionalReducer = emptyReducer
 ) => {
   return (state: S, action: IMTMAction) => {
@@ -36,6 +36,16 @@ export const getCommonReducer = <T, S extends IBase<T>>(
         return {
           ...state,
           isPanelOpen: false
+        };
+      case "onDeleteClick":
+        return {
+          ...state,
+          isDeleteConfirmationDialogVisible: true
+        };
+      case "onDeleteDialogDismiss":
+        return {
+          ...state,
+          isDeleteConfirmationDialogVisible: false
         };
       default:
         return additionalReducer(state, action);

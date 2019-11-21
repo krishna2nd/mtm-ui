@@ -6,7 +6,9 @@ import MTMTextField from "../Presentational/MTMTextField";
 import { Dropdown, IDropdownOption } from "office-ui-fabric-react/lib/Dropdown";
 import { saveVariablesItem } from "../../service/Api";
 
-interface IVariablePanel extends IVariableItem {}
+interface IVariablePanel extends IVariableItem {
+  refreshItems(): void;
+}
 
 const VariablePanel: React.FC<IVariablePanel> = (props: IVariablePanel) => {
   const [name, setName] = useState(props.name);
@@ -19,6 +21,7 @@ const VariablePanel: React.FC<IVariablePanel> = (props: IVariablePanel) => {
     const variableItem = { name, type, body, id: props.id };
     saveVariablesItem(variableItem)
       .then(() => setSaveStatus(Status.Completed))
+      .then(props.refreshItems)
       .catch(() => setSaveStatus(Status.Failed));
   };
 
@@ -63,7 +66,7 @@ const VariablePanel: React.FC<IVariablePanel> = (props: IVariablePanel) => {
       headerText={props.id === -1 ? "Add Variables" : "Edit Variables"}
       onSaveClick={onSaveClick}
       content={content}
-      isFormValid
+      isFormValid={Boolean(name)}
       isActionInProgress={saveStatus === Status.Loading}
     />
   );

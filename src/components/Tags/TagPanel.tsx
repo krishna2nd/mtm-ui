@@ -5,7 +5,9 @@ import MTMPanel from "../Presentational/MTMPanel";
 import MTMTextField from "../Presentational/MTMTextField";
 import { saveTagItem } from "../../service/Api";
 
-interface ITagPanelProps extends ITagItem {}
+interface ITagPanelProps extends ITagItem {
+  refreshItems(): void;
+}
 
 const TagPanel: React.FC<ITagPanelProps> = (props: ITagPanelProps) => {
   const [name, setName] = useState(props.name);
@@ -26,6 +28,7 @@ const TagPanel: React.FC<ITagPanelProps> = (props: ITagPanelProps) => {
     };
     saveTagItem(tagItem)
       .then(() => setSaveStatus(Status.Completed))
+      .then(props.refreshItems)
       .catch(() => setSaveStatus(Status.Failed));
   };
 
@@ -60,7 +63,7 @@ const TagPanel: React.FC<ITagPanelProps> = (props: ITagPanelProps) => {
       onSaveClick={onSaveClick}
       content={content}
       isActionInProgress={saveStatus === Status.Loading}
-      isFormValid
+      isFormValid={Boolean(name)}
     />
   );
 };

@@ -8,7 +8,8 @@ export interface IVariablesState extends IBase<IVariableItem> {}
 export const VariablesInitialState: IVariablesState = {
   selectedItem: new VariableItem(),
   panelData: new VariableItem(),
-  isPanelOpen: false
+  isPanelOpen: false,
+  isDeleteConfirmationDialogVisible: false
 };
 
 export const VariablesReducer = (

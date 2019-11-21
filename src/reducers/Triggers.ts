@@ -9,6 +9,7 @@ export const TriggersInitialState: ITriggersState = {
   selectedItem: new TriggerItem(),
   panelData: new TriggerItem(),
   isPanelOpen: false,
+  isDeleteConfirmationDialogVisible: false
 };
 
 export const TriggersReducer = (

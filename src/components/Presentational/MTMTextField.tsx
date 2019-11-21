@@ -12,5 +12,12 @@ export default (props: IMTMTextFieldProps) => {
       props.onValueChange(newValue);
     }
   };
-  return <TextField {...props} onChange={debounce(onValueChange)} />;
+  return (
+    <TextField
+      {...props}
+      autoComplete={"off"}
+      spellCheck={false}
+      onChange={debounce(onValueChange)}
+    />
+  );
 };

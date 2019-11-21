@@ -8,7 +8,8 @@ export interface ITagsState extends IBase<ITagItem> {}
 export const TagsInitialState: ITagsState = {
   selectedItem: new TagItem(),
   panelData: new TagItem(),
-  isPanelOpen: false
+  isPanelOpen: false,
+  isDeleteConfirmationDialogVisible: false
 };
 
 export const TagsReducer = (

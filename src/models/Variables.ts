@@ -12,7 +12,7 @@ export class VariableItem implements IVariableItem {
   type = "";
   id = -1;
 
-  constructor(obj = {}) {
-    Object.assign(this, obj);
+  constructor(obj: Partial<IVariableItem> = {}) {
+    Object.assign<IVariableItem, Partial<IVariableItem>>(this, obj);
   }
 }

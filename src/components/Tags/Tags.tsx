@@ -6,7 +6,9 @@ import TagPanel from "./TagPanel";
 import { ITagsState } from "../../reducers/Tags";
 import { ITagItem } from "../../models/Tags";
 import MTMList, { PartialColumn } from "../Presentational/MTMList";
-import { getTagsList } from "../../service/Api";
+import { getTagsList, deleteTagItem } from "../../service/Api";
+import MTMDialog from "../Presentational/MTMDialog";
+import { Dispatch } from "redux";
 
 const columns: PartialColumn[] = [
   {
@@ -27,13 +29,23 @@ const columns: PartialColumn[] = [
 
 const mapStateToProps = (state: IState) => state.tags;
 
-interface ITagsProps extends ITagsState {}
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  onDeleteDialogDismiss: () => dispatch({ type: "onDeleteDialogDismiss" })
+});
+
+interface ITagsProps
+  extends ITagsState,
+    ReturnType<typeof mapDispatchToProps> {}
 
 const Tags: React.FC<ITagsProps> = (props: ITagsProps) => {
   const [items, setItems] = useState([] as ITagItem[]);
 
   const fetchItems = () => {
     getTagsList().then(setItems);
+  };
+
+  const deleteItem = () => {
+    deleteTagItem(props.selectedItem.id).then(fetchItems);
   };
 
   useEffect(() => {
@@ -43,14 +55,24 @@ const Tags: React.FC<ITagsProps> = (props: ITagsProps) => {
   return (
     <>
       <MTMList items={items} columns={columns} />
-      {props.isPanelOpen && <TagPanel {...props.panelData} />}
+      {props.isPanelOpen && (
+        <TagPanel {...props.panelData} refreshItems={fetchItems} />
+      )}
+      <MTMDialog
+        onConfirm={() => {
+          deleteItem();
+          props.onDeleteDialogDismiss();
+        }}
+        onCancel={props.onDeleteDialogDismiss}
+        isVisible={props.isDeleteConfirmationDialogVisible}
+      />
     </>
   );
 };
 
 export default {
   name: "Tags",
-  component: connect(mapStateToProps)(Tags),
+  component: connect(mapStateToProps, mapDispatchToProps)(Tags),
   icon: "Tag",
   key: Routes.Tags
 } as IRouteComponent;

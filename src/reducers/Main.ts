@@ -24,11 +24,7 @@ export const MainReducer = (
         ...state,
         isEditPanelVisible: true
       };
-    case "onDeleteClick":
-      return {
-        ...state,
-        isDeleteConfirmationDialogVisible: true
-      };
+
     case "onItemSelection":
       return {
         ...state,
@@ -41,6 +37,6 @@ export const MainReducer = (
         hasSelectedItem: false
       };
     default:
-      return InitialState;
+      return state;
   }
 };

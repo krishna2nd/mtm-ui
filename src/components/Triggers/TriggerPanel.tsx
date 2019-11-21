@@ -5,7 +5,9 @@ import MTMPanel from "../Presentational/MTMPanel";
 import MTMTextField from "../Presentational/MTMTextField";
 import { saveTriggerItem } from "../../service/Api";
 
-interface ITriggerPanelProps extends ITriggerItem {}
+interface ITriggerPanelProps extends ITriggerItem {
+  refreshItems(): void;
+}
 
 const TriggerPanel: React.FC<ITriggerPanelProps> = (
   props: ITriggerPanelProps
@@ -20,6 +22,7 @@ const TriggerPanel: React.FC<ITriggerPanelProps> = (
     const triggerItem = { name, type, body: props.body, id: props.id };
     saveTriggerItem(triggerItem)
       .then(() => setSaveStatus(Status.Completed))
+      .then(props.refreshItems)
       .catch(() => setSaveStatus(Status.Failed));
   };
 
@@ -55,7 +58,7 @@ const TriggerPanel: React.FC<ITriggerPanelProps> = (
       onSaveClick={onSaveClick}
       content={content}
       isActionInProgress={saveStatus === Status.Loading}
-      isFormValid
+      isFormValid={Boolean(name) && Boolean(type)}
     />
   );
 };

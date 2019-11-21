@@ -12,7 +12,7 @@ export class TriggerItem implements ITriggerItem {
   body = "";
   id = -1;
 
-  constructor(obj = {}) {
-    Object.assign(this, obj);
+  constructor(obj: Partial<ITriggerItem> = {}) {
+    Object.assign<ITriggerItem, Partial<ITriggerItem>>(this, obj);
   }
 }
