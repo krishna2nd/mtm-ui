@@ -38,6 +38,14 @@ const columns: IColumn[] = [
     minWidth: 100,
     maxWidth: 200,
     isResizable: true
+  },
+  {
+    key: "column3",
+    name: "Body",
+    fieldName: "body",
+    minWidth: 100,
+    maxWidth: 200,
+    isResizable: true
   }
 ];
 

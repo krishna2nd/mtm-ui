@@ -37,33 +37,7 @@ const columns: IColumn[] = [
   {
     key: "column2",
     name: "Event Type",
-    fieldName: "eventType",
-    minWidth: 100,
-    maxWidth: 200,
-    isResizable: true
-  },
-  {
-    key: "column3",
-    name: "Tags",
-    fieldName: "tags",
-    minWidth: 100,
-    maxWidth: 200,
-    isResizable: true,
-    onRender: (item: ITriggerItem) => item.tags.join(", ")
-  },
-  {
-    key: "column4",
-    name: "Last Edited",
-    fieldName: "lastEdited",
-    minWidth: 100,
-    maxWidth: 200,
-    isResizable: true,
-    onRender: (item: ITriggerItem) => item.lastEdited.toLocaleString()
-  },
-  {
-    key: "column5",
-    name: "Filter",
-    fieldName: "filter",
+    fieldName: "type",
     minWidth: 100,
     maxWidth: 200,
     isResizable: true

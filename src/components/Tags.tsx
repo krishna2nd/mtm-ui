@@ -28,14 +28,6 @@ const columns: IColumn[] = [
   },
   {
     key: "column2",
-    name: "Type",
-    fieldName: "type",
-    minWidth: 100,
-    maxWidth: 200,
-    isResizable: true
-  },
-  {
-    key: "column3",
     name: "Firing Triggers",
     fieldName: "triggers",
     minWidth: 100,
@@ -44,13 +36,12 @@ const columns: IColumn[] = [
     onRender: (item: ITagItem) => item.triggers.join(", ")
   },
   {
-    key: "column4",
-    name: "Last Edited",
-    fieldName: "lastEdited",
+    key: "column3",
+    name: "Body",
+    fieldName: "body",
     minWidth: 100,
     maxWidth: 200,
-    isResizable: true,
-    onRender: (item: ITagItem) => item.lastEdited.toLocaleString()
+    isResizable: true
   }
 ];
 
@@ -78,10 +69,10 @@ const Tags: React.FC<ITagsProps> = (props: ITagsProps) => {
 
   useEffect(() => {
     fetch("https://ms-tagmanager.azurewebsites.net/tags")
-      .then(res => res.json())
+      .then(response => response.json())
       .then(
-        result => {
-          setItems(result);
+        response => {
+          setItems(response);
         },
         error => {
           console.log(error);
