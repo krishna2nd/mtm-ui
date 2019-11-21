@@ -6,7 +6,7 @@ export interface IVariableItem {
 }
 
 export class VariableItem implements IVariableItem {
-  body = "0";
+  body = "";
   name = "";
   type = "";
   id = -1;
