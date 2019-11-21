@@ -22,26 +22,27 @@ const columns: IColumn[] = [
     key: "column1",
     name: "Name",
     fieldName: "name",
-    minWidth: 100,
+    minWidth: 10,
     maxWidth: 200,
-    isResizable: true
-  },
-  {
-    key: "column2",
-    name: "Firing Triggers",
-    fieldName: "triggers",
-    minWidth: 100,
-    maxWidth: 200,
-    isResizable: true,
-    onRender: (item: ITagItem) => item.triggers.join(", ")
+    isResizable: false
   },
   {
     key: "column3",
     name: "Body",
     fieldName: "body",
-    minWidth: 100,
+    minWidth: 10,
     maxWidth: 200,
-    isResizable: true
+    isMultiline: true,
+    isResizable: false
+  },
+  {
+    key: "column2",
+    name: "Firing Triggers",
+    fieldName: "triggers",
+    minWidth: 10,
+    maxWidth: 200,
+    isResizable: false,
+    onRender: (item: ITagItem) => item.triggers.join(", ")
   }
 ];
 
