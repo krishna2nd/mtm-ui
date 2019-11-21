@@ -1,8 +1,8 @@
 import { combineReducers, createStore } from "redux";
 import { MainReducer, MainState } from "./Main";
-import { TagsReducer, TagsState } from "./Tags";
-import { TriggersReducer, TriggersState } from "./Triggers";
-import { VariablesReducer, VariablesState } from "./Variables";
+import { TagsReducer, ITagsState } from "./Tags";
+import { TriggersReducer, ITriggersState } from "./Triggers";
+import { VariablesReducer, IVariablesState } from "./Variables";
 
 declare global {
   interface Window {
@@ -12,9 +12,9 @@ declare global {
 
 export interface IState {
   main: MainState;
-  tags: TagsState;
-  triggers: TriggersState;
-  variables: VariablesState;
+  tags: ITagsState;
+  triggers: ITriggersState;
+  variables: IVariablesState;
 }
 
 export default createStore<IState, any, any, any>(

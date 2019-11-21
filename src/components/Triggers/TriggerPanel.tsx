@@ -3,6 +3,7 @@ import { Status } from "../../models/App";
 import { ITriggerItem } from "../../models/Triggers";
 import MTMPanel from "../Presentational/MTMPanel";
 import MTMTextField from "../Presentational/MTMTextField";
+import { saveTriggerItem } from "../../service/Api";
 
 interface ITriggerPanelProps extends ITriggerItem {}
 
@@ -10,19 +11,14 @@ const TriggerPanel: React.FC<ITriggerPanelProps> = (
   props: ITriggerPanelProps
 ) => {
   const [name, setName] = useState(props.name);
-  const [eventType, setEventType] = useState(props.eventType);
+  const [type, setType] = useState(props.type);
 
   const [saveStatus, setSaveStatus] = useState(Status.NotYetStarted);
 
   const onSaveClick = () => {
     setSaveStatus(Status.Loading);
-    fetch("https://ms-tagmanager.azurewebsites.net/tags", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ name, eventType })
-    })
+    const triggerItem = { name, type, body: props.body, id: props.id };
+    saveTriggerItem(triggerItem)
       .then(() => setSaveStatus(Status.Completed))
       .catch(() => setSaveStatus(Status.Failed));
   };
@@ -37,15 +33,23 @@ const TriggerPanel: React.FC<ITriggerPanelProps> = (
       />
       <MTMTextField
         label={"Event Type"}
-        onValueChange={setEventType}
+        value={type}
+        onValueChange={setType}
         required
+      />
+      <MTMTextField
+        label={"Body"}
+        value={props.body}
+        multiline
+        rows={4}
+        readOnly
       />
     </>
   );
 
   return (
     <MTMPanel
-      headerText="Add Trigger"
+      headerText={props.id === -1 ? "Add Trigger" : "Edit Trigger"}
       onSaveClick={onSaveClick}
       content={content}
       isActionInProgress={saveStatus === Status.Loading}

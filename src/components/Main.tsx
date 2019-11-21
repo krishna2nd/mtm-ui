@@ -24,18 +24,13 @@ const getNavLinks = memoizeFunction((routes: IRouteComponent[]) =>
   )
 );
 
-const mapStateToProps = (state: IState) => ({
-  isAddPanelVisible: state.main.isAddPanelVisible,
-  isDeleteConfirmationDialogVisible:
-    state.main.isDeleteConfirmationDialogVisible,
-  isEditPanelVisible: state.main.isEditPanelVisible,
-  state: state
-});
+const mapStateToProps = (state: IState) => state.main;
 
 const mapDispatchToProps = (dispatch: any) => ({
   onAddClick: () => dispatch({ type: "onAddClick" }),
   onEditClick: () => dispatch({ type: "onEditClick" }),
-  onDeleteClick: () => dispatch({ type: "onDeleteClick" })
+  onDeleteClick: () => dispatch({ type: "onDeleteClick" }),
+  onRouteChange: () => dispatch({ type: "onRouteChange" })
 });
 
 interface IMainProps
@@ -62,6 +57,7 @@ const Main: React.FC<IMainProps> = (props: IMainProps) => {
     props.history.push(navLink!.link);
     setSelectedRoute(navLink!.link);
     setHeaderName(navLink!.name);
+    props.onRouteChange();
   };
 
   return (
@@ -86,12 +82,14 @@ const Main: React.FC<IMainProps> = (props: IMainProps) => {
             {
               key: "editRow",
               text: "Edit",
+              disabled: !props.hasSelectedItem,
               iconProps: { iconName: "Edit" },
               onClick: () => props.onEditClick()
             },
             {
               key: "deleteRow",
               text: "Delete",
+              disabled: !props.hasSelectedItem,
               iconProps: { iconName: "Trash" },
               onClick: () => props.onDeleteClick()
             }
@@ -99,7 +97,10 @@ const Main: React.FC<IMainProps> = (props: IMainProps) => {
         />
         <Router
           routes={routes}
-          setSelectedRoute={(key: Routes) => setSelectedRoute(key)}
+          setSelectedRoute={(key: Routes) => {
+            setSelectedRoute(key);
+            props.onRouteChange();
+          }}
         ></Router>
       </div>
     </main>

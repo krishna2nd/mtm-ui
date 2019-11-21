@@ -16,6 +16,10 @@ export interface IMTMAction<P = any> {
   payload?: P;
 }
 
+export interface IWithId {
+  id: number;
+}
+
 export enum Status {
   NotYetStarted,
   Loading,

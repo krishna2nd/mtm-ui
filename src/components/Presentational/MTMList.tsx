@@ -12,7 +12,8 @@ import { Dispatch } from "redux";
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   setSelectedItem: (item: any) =>
-    dispatch({ type: "onTagItemSelection", payload: item })
+    dispatch({ type: "onItemSelection", payload: item }),
+  resetSelectedItems: () => dispatch({ type: "onResetItemSelection" })
 });
 
 export type PartialColumn = Pick<
@@ -25,13 +26,15 @@ interface IMTMListProps<T> extends ReturnType<typeof mapDispatchToProps> {
 }
 
 function MTMList<T>(props: IMTMListProps<T>) {
-  const onSelectionChanged = () => {
-    const selectedItem = selection.getSelection()[0];
-    props.setSelectedItem(selectedItem as T);
-  };
-
   const selection = new Selection({
-    onSelectionChanged: onSelectionChanged
+    onSelectionChanged: () => {
+      const selectedItem = selection.getSelection()[0];
+      if (selectedItem) {
+        props.setSelectedItem(selectedItem as T);
+      } else {
+        props.resetSelectedItems();
+      }
+    }
   });
 
   return (
@@ -49,16 +52,13 @@ function MTMList<T>(props: IMTMListProps<T>) {
 
 const getColumns = memoizeFunction(
   (partialColumns: PartialColumn[]): IColumn[] =>
-    partialColumns.map(
-      (partialColumn: PartialColumn, index: number) =>
-        ({
-          key: index.toString(),
-          minWidth: 100,
-          maxWidth: 200,
-          isResizable: true,
-          ...partialColumn
-        } as IColumn)
-    )
+    partialColumns.map((partialColumn: PartialColumn, index: number) => ({
+      key: index.toString(),
+      minWidth: 100,
+      maxWidth: 200,
+      isResizable: true,
+      ...partialColumn
+    }))
 );
 
 export default connect(null, mapDispatchToProps)(MTMList);

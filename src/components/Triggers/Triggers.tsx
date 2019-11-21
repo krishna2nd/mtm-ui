@@ -3,12 +3,10 @@ import { IRouteComponent, Routes } from "../../models/App";
 import { connect } from "react-redux";
 import { IState } from "../../reducers/Root";
 import TriggerPanel from "./TriggerPanel";
-import { TriggersState } from "../../reducers/Triggers";
-import { ITriggerItem, TriggerItem } from "../../models/Triggers";
-import { Dispatch } from "redux";
+import { ITriggersState } from "../../reducers/Triggers";
+import { ITriggerItem } from "../../models/Triggers";
 import MTMList, { PartialColumn } from "../Presentational/MTMList";
-
-const mapStateToProps = (state: IState) => state.triggers;
+import { getTriggersList } from "../../service/Api";
 
 const columns: PartialColumn[] = [
   {
@@ -18,28 +16,32 @@ const columns: PartialColumn[] = [
   {
     name: "Event Type",
     fieldName: "type"
+  },
+  {
+    name: "Body",
+    fieldName: "body"
   }
 ];
 
-interface ITriggerProps extends TriggersState {}
+const mapStateToProps = (state: IState) => state.triggers;
+
+interface ITriggerProps extends ITriggersState {}
 
 const Triggers: React.FC<ITriggerProps> = (props: ITriggerProps) => {
   const [items, setItems] = useState([] as ITriggerItem[]);
 
+  const fetchItems = () => {
+    getTriggersList().then(setItems);
+  };
+
   useEffect(() => {
-    fetch("https://ms-tagmanager.azurewebsites.net/triggers")
-      .then(res => res.json())
-      .then(
-        response =>
-          setItems(response.map((item: object) => new TriggerItem(item))),
-        error => console.error(error)
-      );
+    fetchItems();
   }, []);
 
   return (
     <>
       <MTMList items={items} columns={columns} />
-      {props.isTriggerPanelOpen && <TriggerPanel {...props.selectedItem} />}
+      {props.isPanelOpen && <TriggerPanel {...props.selectedItem} />}
     </>
   );
 };

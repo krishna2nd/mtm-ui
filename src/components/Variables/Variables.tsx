@@ -3,11 +3,10 @@ import { Routes, IRouteComponent } from "../../models/App";
 import { connect } from "react-redux";
 import { IState } from "../../reducers/Root";
 import VariablePanel from "./VariablePanel";
-import { VariablesState } from "../../reducers/Variables";
-import { VariableItem, IVariableItem } from "../../models/Variables";
+import { IVariablesState } from "../../reducers/Variables";
+import { IVariableItem } from "../../models/Variables";
 import MTMList, { PartialColumn } from "../Presentational/MTMList";
-
-const mapStateToProps = (state: IState) => state.variables;
+import { getVariablesList } from "../../service/Api";
 
 const columns: PartialColumn[] = [
   {
@@ -24,25 +23,25 @@ const columns: PartialColumn[] = [
   }
 ];
 
-interface IVariableProps extends VariablesState {}
+const mapStateToProps = (state: IState) => state.variables;
+
+interface IVariableProps extends IVariablesState {}
 
 const Variables: React.FC<IVariableProps> = (props: IVariableProps) => {
   const [items, setItems] = useState([] as IVariableItem[]);
 
+  const fetchItems = () => {
+    getVariablesList().then(setItems);
+  };
+
   useEffect(() => {
-    fetch("https://ms-tagmanager.azurewebsites.net/variables")
-      .then(res => res.json())
-      .then(
-        response =>
-          setItems(response.map((item: object) => new VariableItem(item))),
-        error => console.error(error)
-      );
+    fetchItems();
   }, []);
 
   return (
     <>
       <MTMList items={items} columns={columns} />
-      {props.isVariablePanelOpen && <VariablePanel {...props.selectedItem} />}
+      {props.isPanelOpen && <VariablePanel {...props.selectedItem} />}
     </>
   );
 };

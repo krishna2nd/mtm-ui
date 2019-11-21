@@ -1,42 +1,18 @@
 import { IMTMAction } from "../models/App";
-import { TriggerItem } from "../models/Triggers";
+import { ITriggerItem, TriggerItem } from "../models/Triggers";
+import { IBase } from "../models/Common";
+import { getCommonReducer } from "./Common";
 
-export const TriggersInitialState = {
+export interface ITriggersState extends IBase<ITriggerItem> {}
+
+export const TriggersInitialState: ITriggersState = {
   selectedItem: new TriggerItem(),
   panelData: new TriggerItem(),
-  isTriggerPanelOpen: false
+  isPanelOpen: false,
 };
 
-export type TriggersState = typeof TriggersInitialState;
-
-export function TriggersReducer(
+export const TriggersReducer = (
   state = TriggersInitialState,
   action: IMTMAction
-) {
-  switch (action.type) {
-    case "onTriggerItemSelection":
-      return {
-        ...state,
-        selectedItem: new TriggerItem(action.payload)
-      };
-    case "onAddClick":
-      return {
-        ...state,
-        panelData: new TriggerItem(),
-        isTriggerPanelOpen: true
-      };
-    case "onEditClick":
-      return {
-        ...state,
-        panelData: new TriggerItem(state.selectedItem),
-        isTagPanelOpen: true
-      };
-    case "onCancelClick":
-      return {
-        ...state,
-        isTriggerPanelOpen: false
-      };
-    default:
-      return state;
-  }
-}
+): ITriggersState =>
+  getCommonReducer<ITriggerItem, ITriggersState>(TriggerItem)(state, action);

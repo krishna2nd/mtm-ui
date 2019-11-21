@@ -1,39 +1,17 @@
 import { IMTMAction } from "../models/App";
-import { TagItem } from "../models/Tags";
+import { TagItem, ITagItem } from "../models/Tags";
+import { getCommonReducer } from "./Common";
+import { IBase } from "../models/Common";
 
-export const TagsInitialState = {
+export interface ITagsState extends IBase<ITagItem> {}
+
+export const TagsInitialState: ITagsState = {
   selectedItem: new TagItem(),
   panelData: new TagItem(),
-  isTagPanelOpen: false
+  isPanelOpen: false
 };
 
-export type TagsState = typeof TagsInitialState;
-
-export function TagsReducer(state = TagsInitialState, action: IMTMAction) {
-  switch (action.type) {
-    case "onTagItemSelection":
-      return {
-        ...state,
-        selectedItem: new TagItem(action.payload)
-      };
-    case "onAddClick":
-      return {
-        ...state,
-        panelData: new TagItem(),
-        isTagPanelOpen: true
-      };
-    case "onEditClick":
-      return {
-        ...state,
-        panelData: new TagItem(state.selectedItem),
-        isTagPanelOpen: true
-      };
-    case "onCancelClick":
-      return {
-        ...state,
-        isTagPanelOpen: false
-      };
-    default:
-      return state;
-  }
-}
+export const TagsReducer = (
+  state = TagsInitialState,
+  action: IMTMAction
+): ITagsState => getCommonReducer<ITagItem, ITagsState>(TagItem)(state, action);

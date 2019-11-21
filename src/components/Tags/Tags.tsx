@@ -3,9 +3,10 @@ import { Routes, IRouteComponent } from "../../models/App";
 import { connect } from "react-redux";
 import { IState } from "../../reducers/Root";
 import TagPanel from "./TagPanel";
-import { TagsState } from "../../reducers/Tags";
-import { ITagItem, TagItem } from "../../models/Tags";
+import { ITagsState } from "../../reducers/Tags";
+import { ITagItem } from "../../models/Tags";
 import MTMList, { PartialColumn } from "../Presentational/MTMList";
+import { getTagsList } from "../../service/Api";
 
 const columns: PartialColumn[] = [
   {
@@ -25,24 +26,23 @@ const columns: PartialColumn[] = [
 
 const mapStateToProps = (state: IState) => state.tags;
 
-interface ITagsProps extends TagsState {}
+interface ITagsProps extends ITagsState {}
 
 const Tags: React.FC<ITagsProps> = (props: ITagsProps) => {
   const [items, setItems] = useState([] as ITagItem[]);
 
+  const fetchItems = () => {
+    getTagsList().then(setItems);
+  };
+
   useEffect(() => {
-    fetch("https://ms-tagmanager.azurewebsites.net/tags")
-      .then(response => response.json())
-      .then(
-        response => setItems(response.map((item: object) => new TagItem(item))),
-        error => console.error(error)
-      );
+    fetchItems();
   }, []);
 
   return (
     <>
       <MTMList items={items} columns={columns} />
-      {props.isTagPanelOpen && <TagPanel {...props.panelData} />}
+      {props.isPanelOpen && <TagPanel {...props.panelData} />}
     </>
   );
 };

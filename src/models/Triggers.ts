@@ -1,12 +1,15 @@
-export interface ITriggerItem {
+import { IWithId } from "./App";
+
+export interface ITriggerItem extends IWithId {
   name: string;
-  eventType: string;
-  id: number;
+  type: string;
+  body: string;
 }
 
 export class TriggerItem implements ITriggerItem {
   name = "";
-  eventType = "";
+  type = "";
+  body = "";
   id = -1;
 
   constructor(obj = {}) {

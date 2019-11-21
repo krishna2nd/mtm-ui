@@ -3,11 +3,8 @@ import { IVariableItem } from "../../models/Variables";
 import { Status } from "../../models/App";
 import MTMPanel from "../Presentational/MTMPanel";
 import MTMTextField from "../Presentational/MTMTextField";
-import {
-  Dropdown,
-  IDropdownStyles,
-  IDropdownOption
-} from "office-ui-fabric-react/lib/Dropdown";
+import { Dropdown, IDropdownOption } from "office-ui-fabric-react/lib/Dropdown";
+import { saveVariablesItem } from "../../service/Api";
 
 interface IVariablePanel extends IVariableItem {}
 
@@ -19,13 +16,8 @@ const VariablePanel: React.FC<IVariablePanel> = (props: IVariablePanel) => {
 
   const onSaveClick = () => {
     setSaveStatus(Status.Loading);
-    fetch("https://ms-tagmanager.azurewebsites.net/tags", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ name, type })
-    })
+    const variableItem = { name, type, body, id: props.id };
+    saveVariablesItem(variableItem)
       .then(() => setSaveStatus(Status.Completed))
       .catch(() => setSaveStatus(Status.Failed));
   };
@@ -37,11 +29,7 @@ const VariablePanel: React.FC<IVariablePanel> = (props: IVariablePanel) => {
     { key: "cookie", text: "COOKIE" }
   ];
 
-  const onTypeChange = (
-    event: React.FormEvent<HTMLDivElement>,
-    option?: IDropdownOption,
-    index?: number
-  ) => {
+  const onTypeChange = (_: React.FormEvent, option?: IDropdownOption) => {
     setType(option!.text);
   };
 
@@ -63,6 +51,8 @@ const VariablePanel: React.FC<IVariablePanel> = (props: IVariablePanel) => {
         value={body}
         label={"Body"}
         onValueChange={setBody}
+        rows={4}
+        multiline
         required
       />
     </>
@@ -70,7 +60,7 @@ const VariablePanel: React.FC<IVariablePanel> = (props: IVariablePanel) => {
 
   return (
     <MTMPanel
-      headerText="Add Variables"
+      headerText={props.id === -1 ? "Add Variables" : "Edit Variables"}
       onSaveClick={onSaveClick}
       content={content}
       isFormValid

@@ -3,6 +3,7 @@ import { ITagItem } from "../../models/Tags";
 import { Status } from "../../models/App";
 import MTMPanel from "../Presentational/MTMPanel";
 import MTMTextField from "../Presentational/MTMTextField";
+import { saveTagItem } from "../../service/Api";
 
 interface ITagPanelProps extends ITagItem {}
 
@@ -14,20 +15,16 @@ const TagPanel: React.FC<ITagPanelProps> = (props: ITagPanelProps) => {
 
   const onSaveClick = () => {
     setSaveStatus(Status.Loading);
-    fetch("https://ms-tagmanager.azurewebsites.net/tags", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        name,
-        body,
-        triggers: triggers
-          .split(",")
-          .map(t => Number(t.trim()))
-          .filter(n => n && !isNaN(n))
-      })
-    })
+    const tagItem = {
+      name,
+      body,
+      id: props.id,
+      triggers: triggers
+        .split(",")
+        .map(s => Number(s.trim()))
+        .filter(n => n && !isNaN(n))
+    };
+    saveTagItem(tagItem)
       .then(() => setSaveStatus(Status.Completed))
       .catch(() => setSaveStatus(Status.Failed));
   };
@@ -45,13 +42,19 @@ const TagPanel: React.FC<ITagPanelProps> = (props: ITagPanelProps) => {
         value={triggers}
         onValueChange={setTriggers}
       />
-      <MTMTextField label={"Body"} value={body} onValueChange={setBody} />
+      <MTMTextField
+        label={"Body"}
+        value={body}
+        onValueChange={setBody}
+        rows={4}
+        multiline
+      />
     </>
   );
 
   return (
     <MTMPanel
-      headerText="Add Tag"
+      headerText={props.id === -1 ? "Add Tag" : "Edit Tag"}
       onSaveClick={onSaveClick}
       content={content}
       isActionInProgress={saveStatus === Status.Loading}
