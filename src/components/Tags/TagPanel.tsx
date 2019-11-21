@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { TextField } from "office-ui-fabric-react";
 import { ITagItem } from "../../models/Tags";
 import { Status } from "../../models/App";
 import MTMPanel from "../Presentational/MTMPanel";
+import MTMTextField from "../Presentational/MTMTextField";
 
 interface ITagPanelProps extends ITagItem {}
 
@@ -34,22 +34,18 @@ const TagPanel: React.FC<ITagPanelProps> = (props: ITagPanelProps) => {
 
   const content = (
     <>
-      <TextField
+      <MTMTextField
         label={"Name"}
         value={name}
-        onChange={(_: React.FormEvent, newValue = "") => setName(newValue)}
+        onValueChange={setName}
         required
       />
-      <TextField
+      <MTMTextField
         label={"Triggers"}
         value={triggers}
-        onChange={(_: React.FormEvent, newValue = "") => setTriggers(newValue)}
+        onValueChange={setTriggers}
       />
-      <TextField
-        label={"Body"}
-        value={body}
-        onChange={(_: React.FormEvent, newValue = "") => setBody(newValue)}
-      />
+      <MTMTextField label={"Body"} value={body} onValueChange={setBody} />
     </>
   );
 

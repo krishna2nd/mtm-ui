@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { TextField } from "office-ui-fabric-react";
 import { Status } from "../../models/App";
 import { ITriggerItem } from "../../models/Triggers";
 import MTMPanel from "../Presentational/MTMPanel";
+import MTMTextField from "../Presentational/MTMTextField";
 
 interface ITriggerPanelProps extends ITriggerItem {}
 
@@ -29,15 +29,15 @@ const TriggerPanel: React.FC<ITriggerPanelProps> = (
 
   const content = (
     <>
-      <TextField
+      <MTMTextField
         label={"Name"}
         value={name}
-        onChange={(_: React.FormEvent, newValue = "") => setName(newValue)}
+        onValueChange={setName}
         required
       />
-      <TextField
+      <MTMTextField
         label={"Event Type"}
-        onChange={(_: React.FormEvent, newValue = "") => setEventType(newValue)}
+        onValueChange={setEventType}
         required
       />
     </>

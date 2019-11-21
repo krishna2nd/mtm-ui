@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { TextField } from "office-ui-fabric-react";
 import { IVariableItem } from "../../models/Variables";
 import { Status } from "../../models/App";
 import MTMPanel from "../Presentational/MTMPanel";
+import MTMTextField from "../Presentational/MTMTextField";
 
 interface IVariablePanel extends IVariableItem {}
 
@@ -27,22 +27,22 @@ const VariablePanel: React.FC<IVariablePanel> = (props: IVariablePanel) => {
 
   const content = (
     <>
-      <TextField
+      <MTMTextField
         value={name}
         label={"Name"}
-        onChange={(_: React.FormEvent, newValue = "") => setName(newValue)}
+        onValueChange={setName}
         required
       />
-      <TextField
+      <MTMTextField
         value={type}
         label={"Type"}
-        onChange={(_: React.FormEvent, newValue = "") => setType(newValue)}
+        onValueChange={setType}
         required
       />
-      <TextField
+      <MTMTextField
         value={body}
         label={"Body"}
-        onChange={(_: React.FormEvent, newValue = "") => setBody(newValue)}
+        onValueChange={setBody}
         required
       />
     </>
