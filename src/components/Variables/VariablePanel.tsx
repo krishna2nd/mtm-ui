@@ -3,6 +3,11 @@ import { IVariableItem } from "../../models/Variables";
 import { Status } from "../../models/App";
 import MTMPanel from "../Presentational/MTMPanel";
 import MTMTextField from "../Presentational/MTMTextField";
+import {
+  Dropdown,
+  IDropdownStyles,
+  IDropdownOption
+} from "office-ui-fabric-react/lib/Dropdown";
 
 interface IVariablePanel extends IVariableItem {}
 
@@ -25,6 +30,25 @@ const VariablePanel: React.FC<IVariablePanel> = (props: IVariablePanel) => {
       .catch(() => setSaveStatus(Status.Failed));
   };
 
+  const dropdownStyles: Partial<IDropdownStyles> = {
+    dropdown: { width: 300 }
+  };
+
+  const options: IDropdownOption[] = [
+    { key: "function", text: "FUNCTION" },
+    { key: "custom", text: "CUSTOM" },
+    { key: "data_layer", text: "DATA_LAYER" },
+    { key: "cookie", text: "COOKIE" }
+  ];
+
+  const onTypeChange = (
+    event: React.FormEvent<HTMLDivElement>,
+    option?: IDropdownOption,
+    index?: number
+  ) => {
+    setType(option!.text);
+  };
+
   const content = (
     <>
       <MTMTextField
@@ -33,11 +57,12 @@ const VariablePanel: React.FC<IVariablePanel> = (props: IVariablePanel) => {
         onValueChange={setName}
         required
       />
-      <MTMTextField
-        value={type}
-        label={"Type"}
-        onValueChange={setType}
-        required
+      <Dropdown
+        placeholder="Select Type"
+        label="Select Type"
+        options={options}
+        styles={dropdownStyles}
+        onChange={onTypeChange}
       />
       <MTMTextField
         value={body}
