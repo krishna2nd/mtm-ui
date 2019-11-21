@@ -15,7 +15,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch({ type: "onTagItemSelection", payload: item })
 });
 
-export type PartialColumn = Pick<IColumn, "name" | "fieldName" | "onRender">;
+export type PartialColumn = Pick<
+  IColumn,
+  "name" | "fieldName" | "onRender" | "isMultiline"
+>;
 interface IMTMListProps<T> extends ReturnType<typeof mapDispatchToProps> {
   items: T[];
   columns: PartialColumn[];

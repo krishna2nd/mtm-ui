@@ -13,12 +13,13 @@ const columns: PartialColumn[] = [
     fieldName: "name"
   },
   {
-    name: "Firing Triggers",
-    onRender: (item: ITagItem) => item.triggers.join(", ")
+    name: "Body",
+    fieldName: "body",
+    isMultiline: true
   },
   {
-    name: "Body",
-    fieldName: "body"
+    name: "Firing Triggers",
+    onRender: (item: ITagItem) => item.triggers.join(", ")
   }
 ];
 
