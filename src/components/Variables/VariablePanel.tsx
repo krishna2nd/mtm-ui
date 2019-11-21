@@ -30,10 +30,6 @@ const VariablePanel: React.FC<IVariablePanel> = (props: IVariablePanel) => {
       .catch(() => setSaveStatus(Status.Failed));
   };
 
-  const dropdownStyles: Partial<IDropdownStyles> = {
-    dropdown: { width: 300 }
-  };
-
   const options: IDropdownOption[] = [
     { key: "function", text: "FUNCTION" },
     { key: "custom", text: "CUSTOM" },
@@ -61,7 +57,6 @@ const VariablePanel: React.FC<IVariablePanel> = (props: IVariablePanel) => {
         placeholder="Select Type"
         label="Select Type"
         options={options}
-        styles={dropdownStyles}
         onChange={onTypeChange}
       />
       <MTMTextField
