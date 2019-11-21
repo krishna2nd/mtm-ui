@@ -19,7 +19,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export type PartialColumn = Pick<
   IColumn,
   "name" | "fieldName" | "onRender" | "isMultiline"
->;
+> & {
+  minColumnWidth?: number;
+};
 interface IMTMListProps<T> extends ReturnType<typeof mapDispatchToProps> {
   items: T[];
   columns: PartialColumn[];
@@ -42,7 +44,7 @@ function MTMList<T>(props: IMTMListProps<T>) {
       items={props.items}
       className={"table-border"}
       columns={getColumns(props.columns)}
-      layoutMode={DetailsListLayoutMode.justified}
+      layoutMode={DetailsListLayoutMode.fixedColumns}
       selectionPreservedOnEmptyClick
       selectionMode={SelectionMode.single}
       selection={selection}
@@ -54,8 +56,8 @@ const getColumns = memoizeFunction(
   (partialColumns: PartialColumn[]): IColumn[] =>
     partialColumns.map((partialColumn: PartialColumn, index: number) => ({
       key: index.toString(),
-      minWidth: 100,
-      maxWidth: 200,
+      maxWidth: 300,
+      minWidth: partialColumn.minColumnWidth || 300,
       isResizable: true,
       ...partialColumn
     }))

@@ -42,8 +42,8 @@ const VariablePanel: React.FC<IVariablePanel> = (props: IVariablePanel) => {
         required
       />
       <Dropdown
-        placeholder="Select Type"
-        label="Select Type"
+        placeholder={"Select Type"}
+        label={"Select Type"}
         options={options}
         onChange={onTypeChange}
       />

@@ -27,12 +27,14 @@ const TriggerPanel: React.FC<ITriggerPanelProps> = (
     <>
       <MTMTextField
         label={"Name"}
+        maxLength={50}
         value={name}
         onValueChange={setName}
         required
       />
       <MTMTextField
         label={"Event Type"}
+        maxLength={50}
         value={type}
         onValueChange={setType}
         required

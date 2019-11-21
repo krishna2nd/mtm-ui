@@ -33,12 +33,14 @@ const TagPanel: React.FC<ITagPanelProps> = (props: ITagPanelProps) => {
     <>
       <MTMTextField
         label={"Name"}
+        maxLength={50}
         value={name}
         onValueChange={setName}
         required
       />
       <MTMTextField
         label={"Triggers"}
+        maxLength={50}
         value={triggers}
         onValueChange={setTriggers}
       />

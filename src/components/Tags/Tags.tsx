@@ -14,13 +14,14 @@ const columns: PartialColumn[] = [
     fieldName: "name"
   },
   {
-    name: "Body",
-    fieldName: "body",
-    isMultiline: true
-  },
-  {
     name: "Firing Triggers",
     onRender: (item: ITagItem) => item.triggers.join(", ")
+  },
+  {
+    name: "Body",
+    fieldName: "body",
+    isMultiline: true,
+    minColumnWidth: 500
   }
 ];
 
