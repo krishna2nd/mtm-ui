@@ -6,7 +6,8 @@ import {
   SpinnerSize,
   FontSizes,
   DefaultPalette,
-  FontWeights
+  FontWeights,
+  PanelType
 } from "office-ui-fabric-react";
 import * as React from "react";
 import { connect } from "react-redux";
@@ -27,6 +28,8 @@ interface IMTMPanelProps extends ReturnType<typeof mapDispatchToProps> {
 const MTMPanel: React.FC<IMTMPanelProps> = (props: IMTMPanelProps) => (
   <Panel
     isOpen
+    type={PanelType.medium}
+    styles={{ main: { padding: "10px 20px" } }}
     closeButtonAriaLabel="Close"
     headerText={props.headerText}
     onDismiss={props.onCancelClick}

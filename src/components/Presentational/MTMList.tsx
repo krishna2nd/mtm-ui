@@ -4,7 +4,8 @@ import {
   SelectionMode,
   IColumn,
   Selection,
-  memoizeFunction
+  memoizeFunction,
+  ColumnActionsMode
 } from "office-ui-fabric-react";
 import * as React from "react";
 import { connect } from "react-redux";
@@ -57,6 +58,7 @@ const getColumns = memoizeFunction(
     partialColumns.map((partialColumn: PartialColumn, index: number) => ({
       key: index.toString(),
       maxWidth: 300,
+      columnActionsMode: ColumnActionsMode.disabled,
       minWidth: partialColumn.minColumnWidth || 300,
       isResizable: true,
       ...partialColumn

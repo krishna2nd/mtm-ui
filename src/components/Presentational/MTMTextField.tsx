@@ -16,6 +16,7 @@ export default (props: IMTMTextFieldProps) => {
     <TextField
       {...props}
       autoComplete={"off"}
+      styles={{ root: { padding: "8px 0" } }}
       spellCheck={false}
       onChange={debounce(onValueChange)}
     />
