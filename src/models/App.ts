@@ -1,7 +1,7 @@
 export enum Routes {
-  Triggers = "/triggers",
-  Variables = "/variables",
-  Tags = "/"
+  Triggers = '/triggers',
+  Variables = '/variables',
+  Tags = '/'
 }
 
 export interface IRouteComponent {
@@ -11,6 +11,7 @@ export interface IRouteComponent {
   icon: string;
 }
 
+/* tslint:disable-next-line:no-any */
 export interface IMTMAction<P = any> {
   type: string;
   payload?: P;

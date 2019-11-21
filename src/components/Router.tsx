@@ -1,13 +1,13 @@
-import * as React from "react";
-import { Redirect, Route } from "react-router-dom";
-import { Routes, IRouteComponent } from "./models/App";
+import { IRouteComponent, Routes } from 'models/App';
+import React from 'react';
+import { Redirect, Route } from 'react-router-dom';
 
 interface IRouterProps {
   setSelectedRoute: (key: Routes) => void;
   routes: IRouteComponent[];
 }
 
-const Router: React.FC<IRouterProps> = (props: IRouterProps) => (
+export default (props: IRouterProps) => (
   <>
     {props.routes.map((rc: IRouteComponent) => (
       <Route path={rc.key} exact component={rc.component} key={rc.key} />
@@ -15,5 +15,3 @@ const Router: React.FC<IRouterProps> = (props: IRouterProps) => (
     <Redirect to={Routes.Tags} />
   </>
 );
-
-export default Router;

@@ -1,4 +1,6 @@
-import { IWithId } from "./App";
+import { IDropdownOption } from 'office-ui-fabric-react';
+
+import { IWithId } from './App';
 
 export interface IVariableItem extends IWithId {
   body: string;
@@ -7,12 +9,19 @@ export interface IVariableItem extends IWithId {
 }
 
 export class VariableItem implements IVariableItem {
-  body = "";
-  name = "";
-  type = "";
+  body = '';
+  name = '';
+  type = '';
   id = -1;
 
   constructor(obj: Partial<IVariableItem> = {}) {
     Object.assign<IVariableItem, Partial<IVariableItem>>(this, obj);
   }
 }
+
+export const VariableTypes: IDropdownOption[] = [
+  { key: 'function', text: 'FUNCTION' },
+  { key: 'custom', text: 'CUSTOM' },
+  { key: 'data_layer', text: 'DATA_LAYER' },
+  { key: 'cookie', text: 'COOKIE' }
+];

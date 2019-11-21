@@ -1,5 +1,5 @@
 // const HostPrefix = "https://ms-tagmanager.azurewebsites.net";
-const HostPrefix = "http://52.187.146.85";
+const HostPrefix = 'http://52.187.146.85';
 
 export const Triggers = `${HostPrefix}/triggers`;
 export const Tags = `${HostPrefix}/tags`;

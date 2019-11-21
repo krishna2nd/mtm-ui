@@ -1,20 +1,20 @@
 import {
-  PrimaryButton,
   DefaultButton,
-  Panel,
-  Spinner,
-  SpinnerSize,
-  FontSizes,
   DefaultPalette,
+  FontSizes,
   FontWeights,
-  PanelType
-} from "office-ui-fabric-react";
-import * as React from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
+  Panel,
+  PanelType,
+  PrimaryButton,
+  Spinner,
+  SpinnerSize
+} from 'office-ui-fabric-react';
+import React, { FC } from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onCancelClick: () => dispatch({ type: "onCancelClick" })
+  onPanelDismiss: () => dispatch({ type: 'onPanelDismiss' })
 });
 
 interface IMTMPanelProps extends ReturnType<typeof mapDispatchToProps> {
@@ -25,14 +25,14 @@ interface IMTMPanelProps extends ReturnType<typeof mapDispatchToProps> {
   onSaveClick(): void;
 }
 
-const MTMPanel: React.FC<IMTMPanelProps> = (props: IMTMPanelProps) => (
+const MTMPanel: FC<IMTMPanelProps> = (props: IMTMPanelProps) => (
   <Panel
     isOpen
     type={PanelType.medium}
-    styles={{ main: { padding: "10px 20px" } }}
+    styles={{ main: { padding: '10px 20px' } }}
     closeButtonAriaLabel="Close"
     headerText={props.headerText}
-    onDismiss={props.onCancelClick}
+    onDismiss={props.onPanelDismiss}
     onRenderFooterContent={() => renderFooterContent(props)}
   >
     {props.content}
@@ -40,7 +40,7 @@ const MTMPanel: React.FC<IMTMPanelProps> = (props: IMTMPanelProps) => (
 );
 
 const renderFooterContent = (props: IMTMPanelProps) => (
-  <div style={{ display: "flex", justifyContent: "space-between" }}>
+  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
     <PrimaryButton
       onClick={props.isActionInProgress ? undefined : props.onSaveClick}
       styles={{ root: { width: 110 } }}
@@ -49,8 +49,8 @@ const renderFooterContent = (props: IMTMPanelProps) => (
       {props.isActionInProgress ? (
         <Spinner
           size={SpinnerSize.small}
-          label={"Saving..."}
-          labelPosition={"left"}
+          label={'Saving...'}
+          labelPosition={'left'}
           styles={{
             label: {
               color: DefaultPalette.white,
@@ -60,10 +60,15 @@ const renderFooterContent = (props: IMTMPanelProps) => (
           }}
         />
       ) : (
-        "Save"
+        'Save'
       )}
     </PrimaryButton>
-    <DefaultButton onClick={props.onCancelClick}>Cancel</DefaultButton>
+    <DefaultButton
+      onClick={props.onPanelDismiss}
+      styles={{ root: { borderColor: DefaultPalette.neutralQuaternary } }}
+    >
+      Cancel
+    </DefaultButton>
   </div>
 );
 

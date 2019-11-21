@@ -1,11 +1,12 @@
-import { IMTMAction } from "../models/App";
-import { IVariableItem, VariableItem } from "../models/Variables";
-import { IBase } from "../models/Common";
-import { getCommonReducer } from "./Common";
+import { IMTMAction } from '../models/App';
+import { IBase } from '../models/Common';
+import { IVariableItem, VariableItem } from '../models/Variables';
+
+import { getCommonReducer } from './Common';
 
 export interface IVariablesState extends IBase<IVariableItem> {}
 
-export const VariablesInitialState: IVariablesState = {
+const VariablesInitialState: IVariablesState = {
   selectedItem: new VariableItem(),
   panelData: new VariableItem(),
   isPanelOpen: false,

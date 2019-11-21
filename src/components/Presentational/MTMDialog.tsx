@@ -1,11 +1,11 @@
-import React from "react";
 import {
+  DefaultButton,
   Dialog,
-  DialogType,
   DialogFooter,
-  PrimaryButton,
-  DefaultButton
-} from "office-ui-fabric-react";
+  DialogType,
+  PrimaryButton
+} from 'office-ui-fabric-react';
+import React, { FC } from 'react';
 
 interface IMTMDialogProps {
   isVisible: boolean;
@@ -13,24 +13,29 @@ interface IMTMDialogProps {
   onCancel(): void;
 }
 
-const MTMDialog: React.FC<IMTMDialogProps> = (props: IMTMDialogProps) => (
-  <Dialog
-    hidden={!props.isVisible}
-    dialogContentProps={{
-      type: DialogType.normal,
-      title: "Are you sure?",
-      subText: "Deleting will permanently remove this item."
-    }}
-    modalProps={{
-      styles: { main: { maxWidth: 450 } },
-      isBlocking: true
-    }}
-  >
-    <DialogFooter>
-      <PrimaryButton onClick={props.onConfirm} text="Yes" />
-      <DefaultButton onClick={props.onCancel} text="No" />
-    </DialogFooter>
-  </Dialog>
-);
+const MTMDialog: FC<IMTMDialogProps> = (props: IMTMDialogProps) => {
+  if (!props.isVisible) {
+    return null;
+  }
+  return (
+    <Dialog
+      hidden={false}
+      dialogContentProps={{
+        type: DialogType.normal,
+        title: 'Are you sure?',
+        subText: 'Deleting will permanently remove this item.'
+      }}
+      modalProps={{
+        styles: { main: { maxWidth: 450 } },
+        isBlocking: true
+      }}
+    >
+      <DialogFooter>
+        <PrimaryButton onClick={props.onConfirm} text={'Yes'} />
+        <DefaultButton onClick={props.onCancel} text={'No'} />
+      </DialogFooter>
+    </Dialog>
+  );
+};
 
 export default MTMDialog;

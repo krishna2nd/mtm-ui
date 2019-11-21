@@ -1,54 +1,49 @@
-import React, { useState } from "react";
-import { ITagItem } from "../../models/Tags";
-import { Status } from "../../models/App";
-import MTMPanel from "../Presentational/MTMPanel";
-import MTMTextField from "../Presentational/MTMTextField";
-import { saveTagItem } from "../../service/Api";
+import MTMPanel from 'components/Presentational/MTMPanel';
+import MTMTextField from 'components/Presentational/MTMTextField';
+import { Status } from 'models/App';
+import { ITagItem } from 'models/Tags';
+import React, { FC, useState } from 'react';
 
 interface ITagPanelProps extends ITagItem {
-  refreshItems(): void;
+  saveItem(item: ITagItem): void;
+  saveStatus: Status;
 }
 
-const TagPanel: React.FC<ITagPanelProps> = (props: ITagPanelProps) => {
+const TagPanel: FC<ITagPanelProps> = (props: ITagPanelProps) => {
   const [name, setName] = useState(props.name);
   const [body, setBody] = useState(props.body);
-  const [triggers, setTriggers] = useState(props.triggers.join(", "));
-  const [saveStatus, setSaveStatus] = useState(Status.NotYetStarted);
+  const [triggers, setTriggers] = useState(props.triggers.join(', '));
 
   const onSaveClick = () => {
-    setSaveStatus(Status.Loading);
     const tagItem = {
       name,
       body,
       id: props.id,
       triggers: triggers
-        .split(",")
+        .split(',')
         .map(s => Number(s.trim()))
         .filter(n => n && !isNaN(n))
     };
-    saveTagItem(tagItem)
-      .then(() => setSaveStatus(Status.Completed))
-      .then(props.refreshItems)
-      .catch(() => setSaveStatus(Status.Failed));
+    props.saveItem(tagItem);
   };
 
   const content = (
     <>
       <MTMTextField
-        label={"Name"}
+        label={'Name'}
         maxLength={50}
         value={name}
         onValueChange={setName}
         required
       />
       <MTMTextField
-        label={"Triggers"}
+        label={'Triggers'}
         maxLength={50}
         value={triggers}
         onValueChange={setTriggers}
       />
       <MTMTextField
-        label={"Body"}
+        label={'Body'}
         value={body}
         onValueChange={setBody}
         rows={4}
@@ -59,10 +54,10 @@ const TagPanel: React.FC<ITagPanelProps> = (props: ITagPanelProps) => {
 
   return (
     <MTMPanel
-      headerText={props.id === -1 ? "Add Tag" : "Edit Tag"}
+      headerText={props.id === -1 ? 'Add Tag' : 'Edit Tag'}
       onSaveClick={onSaveClick}
       content={content}
-      isActionInProgress={saveStatus === Status.Loading}
+      isActionInProgress={props.saveStatus === Status.Loading}
       isFormValid={Boolean(name)}
     />
   );

@@ -1,4 +1,4 @@
-import { IMTMAction } from "../models/App";
+import { IMTMAction } from 'models/App';
 
 export const InitialState = {
   isAddPanelVisible: false,
@@ -14,24 +14,24 @@ export const MainReducer = (
   action: IMTMAction
 ): MainState => {
   switch (action.type) {
-    case "onAddClick":
+    case 'onAddClick':
       return {
         ...state,
         isAddPanelVisible: true
       };
-    case "onEditClick":
+    case 'onEditClick':
       return {
         ...state,
         isEditPanelVisible: true
       };
 
-    case "onItemSelection":
+    case 'onItemSelection':
       return {
         ...state,
         hasSelectedItem: true
       };
-    case "onRouteChange":
-    case "onResetItemSelection":
+    case 'onRouteChange':
+    case 'onResetItemSelection':
       return {
         ...state,
         hasSelectedItem: false

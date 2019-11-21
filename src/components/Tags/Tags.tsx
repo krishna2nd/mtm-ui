@@ -1,78 +1,54 @@
-import React, { useState, useEffect } from "react";
-import { Routes, IRouteComponent } from "../../models/App";
-import { connect } from "react-redux";
-import { IState } from "../../reducers/Root";
-import TagPanel from "./TagPanel";
-import { ITagsState } from "../../reducers/Tags";
-import { ITagItem } from "../../models/Tags";
-import MTMList, { PartialColumn } from "../Presentational/MTMList";
-import { getTagsList, deleteTagItem } from "../../service/Api";
-import MTMDialog from "../Presentational/MTMDialog";
-import { Dispatch } from "redux";
+import RouteMain from 'components/Common/RouteMain';
+import { PartialColumn } from 'components/Presentational/MTMList';
+import { IRouteComponent, Routes, Status } from 'models/App';
+import { ITagItem } from 'models/Tags';
+import React, { FC } from 'react';
+import { connect } from 'react-redux';
+import { IState } from 'reducers/Root';
+import { ITagsState } from 'reducers/Tags';
+import { TagsApi } from 'service/Api';
+
+import TagPanel from './TagPanel';
 
 const columns: PartialColumn[] = [
   {
-    name: "Name",
-    fieldName: "name"
+    name: 'Name',
+    fieldName: 'name'
   },
   {
-    name: "Firing Triggers",
-    onRender: (item: ITagItem) => item.triggers.join(", ")
+    name: 'Firing Triggers',
+    onRender: (item: ITagItem) => item.triggers.join(', ')
   },
   {
-    name: "Body",
-    fieldName: "body",
+    name: 'Body',
+    fieldName: 'body',
     isMultiline: true,
-    minColumnWidth: 500
+    maxColumnWidth: 800
   }
 ];
 
 const mapStateToProps = (state: IState) => state.tags;
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onDeleteDialogDismiss: () => dispatch({ type: "onDeleteDialogDismiss" })
-});
-
-interface ITagsProps
-  extends ITagsState,
-    ReturnType<typeof mapDispatchToProps> {}
-
-const Tags: React.FC<ITagsProps> = (props: ITagsProps) => {
-  const [items, setItems] = useState([] as ITagItem[]);
-
-  const fetchItems = () => {
-    getTagsList().then(setItems);
-  };
-
-  const deleteItem = () => {
-    deleteTagItem(props.selectedItem.id).then(fetchItems);
-  };
-
-  useEffect(() => {
-    fetchItems();
-  }, []);
-
+const Tags: FC<ITagsState> = (tagsState: ITagsState) => {
   return (
-    <>
-      <MTMList items={items} columns={columns} />
-      {props.isPanelOpen && (
-        <TagPanel {...props.panelData} refreshItems={fetchItems} />
-      )}
-      <MTMDialog
-        onConfirm={() => {
-          deleteItem();
-          props.onDeleteDialogDismiss();
-        }}
-        onCancel={props.onDeleteDialogDismiss}
-        isVisible={props.isDeleteConfirmationDialogVisible}
-      />
-    </>
+    <RouteMain
+      renderPanel={renderPanel}
+      apiService={TagsApi}
+      state={tagsState}
+      columns={columns}
+    />
   );
 };
 
+const renderPanel = (
+  panelData: ITagItem,
+  saveItem: (item: ITagItem) => void,
+  saveStatus: Status
+) => <TagPanel {...panelData} saveItem={saveItem} saveStatus={saveStatus} />;
+
 export default {
-  name: "Tags",
-  component: connect(mapStateToProps, mapDispatchToProps)(Tags),
-  icon: "Tag",
+  name: 'Tags',
+  component: connect(mapStateToProps)(Tags),
+  icon: 'Tag',
   key: Routes.Tags
 } as IRouteComponent;

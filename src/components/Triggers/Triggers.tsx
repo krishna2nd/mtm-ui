@@ -1,76 +1,54 @@
-import React, { useState, useEffect } from "react";
-import { IRouteComponent, Routes } from "../../models/App";
-import { connect } from "react-redux";
-import { IState } from "../../reducers/Root";
-import TriggerPanel from "./TriggerPanel";
-import { ITriggersState } from "../../reducers/Triggers";
-import { ITriggerItem } from "../../models/Triggers";
-import MTMList, { PartialColumn } from "../Presentational/MTMList";
-import { getTriggersList, deleteTriggersItem } from "../../service/Api";
-import MTMDialog from "../Presentational/MTMDialog";
-import { Dispatch } from "redux";
+import RouteMain from 'components/Common/RouteMain';
+import { PartialColumn } from 'components/Presentational/MTMList';
+import { IRouteComponent, Routes, Status } from 'models/App';
+import { ITriggerItem } from 'models/Triggers';
+import React, { FC } from 'react';
+import { connect } from 'react-redux';
+import { IState } from 'reducers/Root';
+import { ITriggersState } from 'reducers/Triggers';
+import { TriggersApi } from 'service/Api';
+
+import TriggerPanel from './TriggerPanel';
 
 const columns: PartialColumn[] = [
   {
-    name: "Name",
-    fieldName: "name"
+    name: 'Name',
+    fieldName: 'name'
   },
   {
-    name: "Event Type",
-    fieldName: "type"
+    name: 'Event Type',
+    fieldName: 'type'
   },
   {
-    name: "Body",
-    fieldName: "body"
+    name: 'Body',
+    fieldName: 'body'
   }
 ];
 
 const mapStateToProps = (state: IState) => state.triggers;
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onDeleteDialogDismiss: () => dispatch({ type: "onDeleteDialogDismiss" })
-});
-
-interface ITriggerProps
-  extends ITriggersState,
-    ReturnType<typeof mapDispatchToProps> {}
-
-const Triggers: React.FC<ITriggerProps> = (props: ITriggerProps) => {
-  const [items, setItems] = useState([] as ITriggerItem[]);
-
-  const fetchItems = () => {
-    getTriggersList().then(setItems);
-  };
-
-  const deleteItem = () => {
-    deleteTriggersItem(props.selectedItem.id).then(fetchItems);
-  };
-
-  useEffect(() => {
-    fetchItems();
-  }, []);
-
+const Triggers: FC<ITriggersState> = (triggersState: ITriggersState) => {
   return (
-    <>
-      <MTMList items={items} columns={columns} />
-      {props.isPanelOpen && (
-        <TriggerPanel {...props.selectedItem} refreshItems={fetchItems} />
-      )}
-      <MTMDialog
-        onConfirm={() => {
-          deleteItem();
-          props.onDeleteDialogDismiss();
-        }}
-        onCancel={props.onDeleteDialogDismiss}
-        isVisible={props.isDeleteConfirmationDialogVisible}
-      />
-    </>
+    <RouteMain
+      renderPanel={renderPanel}
+      apiService={TriggersApi}
+      state={triggersState}
+      columns={columns}
+    />
   );
 };
 
+const renderPanel = (
+  panelData: ITriggerItem,
+  saveItem: (item: ITriggerItem) => void,
+  saveStatus: Status
+) => (
+  <TriggerPanel {...panelData} saveItem={saveItem} saveStatus={saveStatus} />
+);
+
 export default {
-  name: "Triggers",
-  component: connect(mapStateToProps, mapDispatchToProps)(Triggers),
-  icon: "TriggerAuto",
+  name: 'Triggers',
+  component: connect(mapStateToProps)(Triggers),
+  icon: 'TriggerAuto',
   key: Routes.Triggers
 } as IRouteComponent;

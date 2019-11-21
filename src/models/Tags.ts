@@ -1,4 +1,4 @@
-import { IWithId } from "./App";
+import { IWithId } from './App';
 
 export interface ITagItem extends IWithId {
   name: string;
@@ -7,8 +7,8 @@ export interface ITagItem extends IWithId {
 }
 
 export class TagItem implements ITagItem {
-  name = "";
-  body = "";
+  name = '';
+  body = '';
   triggers = [];
   id = -1;
 

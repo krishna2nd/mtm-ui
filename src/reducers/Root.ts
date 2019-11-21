@@ -1,8 +1,9 @@
-import { combineReducers, createStore } from "redux";
-import { MainReducer, MainState } from "./Main";
-import { TagsReducer, ITagsState } from "./Tags";
-import { TriggersReducer, ITriggersState } from "./Triggers";
-import { VariablesReducer, IVariablesState } from "./Variables";
+import { combineReducers, createStore } from 'redux';
+
+import { MainReducer, MainState } from './Main';
+import { ITagsState, TagsReducer } from './Tags';
+import { ITriggersState, TriggersReducer } from './Triggers';
+import { IVariablesState, VariablesReducer } from './Variables';
 
 declare global {
   interface Window {
@@ -17,6 +18,7 @@ export interface IState {
   variables: IVariablesState;
 }
 
+/* tslint:disable-next-line:no-any */
 export default createStore<IState, any, any, any>(
   combineReducers<IState>({
     main: MainReducer,
@@ -25,5 +27,5 @@ export default createStore<IState, any, any, any>(
     variables: VariablesReducer
   }),
   window.__REDUX_DEVTOOLS_EXTENSION__ &&
-    window.__REDUX_DEVTOOLS_EXTENSION__({ name: "MTM" })
+    window.__REDUX_DEVTOOLS_EXTENSION__({ name: 'MTM' })
 );

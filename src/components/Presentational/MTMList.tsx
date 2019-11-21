@@ -1,28 +1,32 @@
 import {
+  ColumnActionsMode,
+  DefaultPalette,
   DetailsList,
   DetailsListLayoutMode,
-  SelectionMode,
   IColumn,
-  Selection,
   memoizeFunction,
-  ColumnActionsMode
-} from "office-ui-fabric-react";
-import * as React from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
+  mergeStyles,
+  Selection,
+  SelectionMode
+} from 'office-ui-fabric-react';
+import React from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  /* tslint:disable-next-line:no-any */
   setSelectedItem: (item: any) =>
-    dispatch({ type: "onItemSelection", payload: item }),
-  resetSelectedItems: () => dispatch({ type: "onResetItemSelection" })
+    dispatch({ type: 'onItemSelection', payload: item }),
+  resetSelectedItems: () => dispatch({ type: 'onResetItemSelection' })
 });
 
 export type PartialColumn = Pick<
   IColumn,
-  "name" | "fieldName" | "onRender" | "isMultiline"
+  'name' | 'fieldName' | 'onRender' | 'isMultiline'
 > & {
-  minColumnWidth?: number;
+  maxColumnWidth?: number;
 };
+
 interface IMTMListProps<T> extends ReturnType<typeof mapDispatchToProps> {
   items: T[];
   columns: PartialColumn[];
@@ -43,10 +47,13 @@ function MTMList<T>(props: IMTMListProps<T>) {
   return (
     <DetailsList
       items={props.items}
-      className={"table-border"}
+      className={mergeStyles({
+        border: '0px solid',
+        borderColor: DefaultPalette.neutralQuaternaryAlt
+      })}
       columns={getColumns(props.columns)}
       layoutMode={DetailsListLayoutMode.fixedColumns}
-      selectionPreservedOnEmptyClick
+      selectionPreservedOnEmptyClick={true}
       selectionMode={SelectionMode.single}
       selection={selection}
     />
@@ -57,9 +64,9 @@ const getColumns = memoizeFunction(
   (partialColumns: PartialColumn[]): IColumn[] =>
     partialColumns.map((partialColumn: PartialColumn, index: number) => ({
       key: index.toString(),
-      maxWidth: 300,
+      maxWidth: partialColumn.maxColumnWidth || 300,
       columnActionsMode: ColumnActionsMode.disabled,
-      minWidth: partialColumn.minColumnWidth || 300,
+      minWidth: 200,
       isResizable: true,
       ...partialColumn
     }))

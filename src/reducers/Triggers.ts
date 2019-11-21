@@ -1,11 +1,12 @@
-import { IMTMAction } from "../models/App";
-import { ITriggerItem, TriggerItem } from "../models/Triggers";
-import { IBase } from "../models/Common";
-import { getCommonReducer } from "./Common";
+import { IMTMAction } from 'models/App';
+import { IBase } from 'models/Common';
+import { ITriggerItem, TriggerItem } from 'models/Triggers';
+
+import { getCommonReducer } from './Common';
 
 export interface ITriggersState extends IBase<ITriggerItem> {}
 
-export const TriggersInitialState: ITriggersState = {
+const TriggersInitialState: ITriggersState = {
   selectedItem: new TriggerItem(),
   panelData: new TriggerItem(),
   isPanelOpen: false,
