@@ -37,7 +37,7 @@ const TriggerPanel: FC<ITriggerPanelProps> = (props: ITriggerPanelProps) => {
       />
       <MTMTextField
         label={'Body'}
-        value={props.body}
+        value={body}
         onValueChange={setBody}
         rows={4}
         multiline
