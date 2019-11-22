@@ -70,7 +70,7 @@ const Main: FC<IMainProps> = (props: IMainProps) => {
           borderColor: DefaultPalette.neutralQuaternaryAlt
         })}
       >
-        <h1>MS TagM-o-metry</h1>
+        <h1>MS TagM o'metry</h1>
       </header>
       <main
         className={mergeStyles({

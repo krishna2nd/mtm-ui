@@ -7,7 +7,7 @@ import store from "reducers/Root";
 
 initializeIcons();
 
-document.title = "MS TagM-o-metry";
+document.title = "MS TagM o'metry";
 
 export default () => (
   <Provider store={store}>
