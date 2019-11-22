@@ -14,6 +14,7 @@ const TriggerPanel: React.FC<ITriggerPanelProps> = (
 ) => {
   const [name, setName] = useState(props.name);
   const [type, setType] = useState(props.type);
+  const [body, setBody] = useState(props.body);
 
   const [saveStatus, setSaveStatus] = useState(Status.NotYetStarted);
 
@@ -44,10 +45,10 @@ const TriggerPanel: React.FC<ITriggerPanelProps> = (
       />
       <MTMTextField
         label={"Body"}
-        value={props.body}
+        value={body}
+        onValueChange={setBody}
         multiline
         rows={4}
-        readOnly
       />
     </>
   );
