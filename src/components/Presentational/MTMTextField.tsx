@@ -20,6 +20,8 @@ export default (props: IMTMTextFieldProps) => {
     <TextField
       {...props}
       autoComplete={'off'}
+      value={undefined}
+      defaultValue={props.value}
       styles={{
         root: { padding: '8px 0' },
         fieldGroup: { borderColor: DefaultPalette.neutralTertiaryAlt }
