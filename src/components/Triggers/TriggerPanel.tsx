@@ -13,11 +13,6 @@ const TriggerPanel: FC<ITriggerPanelProps> = (props: ITriggerPanelProps) => {
   const [name, setName] = useState(props.name);
   const [type, setType] = useState(props.type);
   const [body, setBody] = useState(props.body);
-<<<<<<< HEAD
-
-  const [saveStatus, setSaveStatus] = useState(Status.NotYetStarted);
-=======
->>>>>>> a0b529b... Added tslint.
 
   const onSaveClick = () => {
     const triggerItem = { name, type, body, id: props.id };
@@ -41,19 +36,11 @@ const TriggerPanel: FC<ITriggerPanelProps> = (props: ITriggerPanelProps) => {
         required
       />
       <MTMTextField
-<<<<<<< HEAD
-        label={"Body"}
-        value={body}
-        onValueChange={setBody}
-        multiline
-        rows={4}
-=======
         label={'Body'}
         value={props.body}
         onValueChange={setBody}
         rows={4}
         multiline
->>>>>>> a0b529b... Added tslint.
       />
     </>
   );
